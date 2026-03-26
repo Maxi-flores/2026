@@ -474,11 +474,11 @@
 <header>
   <h1>2026 <span>Roadmap Planner</span></h1>
   <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('calendar')">📅 Calendar</button>
-    <button class="tab-btn" onclick="switchTab('schedule')">🕐 Daily Schedule</button>
-    <button class="tab-btn" onclick="switchTab('roadmap')">🗺 Roadmap</button>
-    <button class="tab-btn" onclick="switchTab('goals')">🎯 Goals</button>
-    <button class="tab-btn" onclick="switchTab('calculator')">🧮 Calculator</button>
+    <button class="tab-btn active" onclick="switchTab('calendar', this)">📅 Calendar</button>
+    <button class="tab-btn" onclick="switchTab('schedule', this)">🕐 Daily Schedule</button>
+    <button class="tab-btn" onclick="switchTab('roadmap', this)">🗺 Roadmap</button>
+    <button class="tab-btn" onclick="switchTab('goals', this)">🎯 Goals</button>
+    <button class="tab-btn" onclick="switchTab('calculator', this)">🧮 Calculator</button>
   </div>
 </header>
 
@@ -811,11 +811,11 @@ let state = loadState();
 // ═══════════════════════════════════════════════════════
 //  TAB SWITCHING
 // ═══════════════════════════════════════════════════════
-function switchTab(name) {
+function switchTab(name, btn) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('view-' + name).classList.add('active');
-  event.currentTarget.classList.add('active');
+  btn.classList.add('active');
   if (name === 'calendar')   renderCalendar();
   if (name === 'schedule')   renderSchedule();
   if (name === 'roadmap')    renderRoadmap();
@@ -891,7 +891,8 @@ function renderCalendar() {
 
   // Next month filler
   const total = firstDay + daysInMonth;
-  const remaining = 7 - (total % 7 === 0 ? 7 : total % 7);
+  const cellsInLastWeek = total % 7;
+  const remaining = cellsInLastWeek === 0 ? 0 : 7 - cellsInLastWeek;
   for (let d = 1; d <= remaining; d++) {
     const cell = document.createElement('div');
     cell.className = 'cal-cell other-month';
@@ -1410,9 +1411,14 @@ function calcWeekly() {
     total += v;
   }
   const el = document.getElementById('calc-weekly-result');
+  let weekdayTotal = 0;
+  for (let i = 0; i < 5; i++) {
+    weekdayTotal += parseFloat(document.getElementById('week-h-' + i)?.value) || 0;
+  }
+  const avgWeekday = weekdayTotal / 5;
   el.innerHTML = `
     <div class="stat-row"><span>Total hours/week</span><span class="val">${total.toFixed(1)} h</span></div>
-    <div class="stat-row"><span>Average/day (Mon–Fri)</span><span class="val">${(([...Array(5)].reduce((s,_,i)=>{const v=parseFloat(document.getElementById('week-h-'+i)?.value)||0;return s+v;},0))/5).toFixed(1)} h</span></div>
+    <div class="stat-row"><span>Average/day (Mon–Fri)</span><span class="val">${avgWeekday.toFixed(1)} h</span></div>
     <div class="stat-row"><span>Approx. hours/month</span><span class="val">${(total * 4.33).toFixed(0)} h</span></div>
     <div class="stat-row"><span>Approx. hours/year</span><span class="val">${(total * 52).toFixed(0)} h</span></div>`;
 }
@@ -1485,7 +1491,10 @@ modalOverlay.onclick = () => {
 //  UTILITIES
 // ═══════════════════════════════════════════════════════
 function uid() {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 9);
 }
 
 function formatDate(dateStr) {
