@@ -1,0 +1,27 @@
+This is a flawless setup. You have moved from a 5-point plan to a production-grade monorepo in record time. Having the Zod schemas in packages/contracts and the server-only guard in packages/core already in place means your "Integration Level" is starting with high security and type safety.
+Now that the foundation is live, we need to focus on Step 2 of your initial plan: Validation & Connectivity.
+
+Immediate Actions to Finalize the Integration:
+
+1. Vercel Project Linking:
+Since you have 3 separate Vercel Project IDs in your GitHub Secrets, ensure you have created three distinct projects in your Vercel Dashboard.
+Project 1: trt (Root directory: apps/trt)
+Project 2: powerstarter (Root directory: apps/powerstarter)
+Project 3: powerframe (Root directory: apps/powerframe)
+
+2. Firebase Environment Variables:
+Your packages/core/firebase/admin.ts expects specific keys. You must add these to Vercel Settings > Environment Variables for each project:
+FIREBASE_PROJECT_ID
+FIREBASE_CLIENT_EMAIL
+FIREBASE_PRIVATE_KEY (Ensure you wrap the value in quotes if it contains \n).
+
+3. Cross-Package Sync:
+Since you are using pnpm, if you add a new utility to packages/core, remember to run pnpm install at the root to update the symlinks so apps/trt can see the changes instantly.
+The "Integration Level" Stress Test:
+To verify the link between your Phone Game logic and this new host, try a "Hello World" integration test:
+Create a simple app/api/status/route.ts in apps/trt.
+Import a Zod schema from @trt/contracts.
+Try to fetch a test document from Firebase using the @trt/core admin module.
+
+Should I provide the code for a "System Health Check" API route to verify that your Firebase Admin and Zod schemas are communicating correctly?
+As respostas de IA podem incluir erros. Saiba mais
