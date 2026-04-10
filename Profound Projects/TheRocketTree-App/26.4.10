@@ -99,3 +99,8 @@ Summary of Action:
 Change the Root Directory for each project in Vercel from ./ to their specific folder paths (e.g., apps/powerframe). This is the most common reason
 for a monorepo "rebuild" to fail.
 Can you confirm if your app code is inside an apps/ folder or if it's sitting directly in the root of the repository?
+
+
+
+
+***** TheRocketTree-Web for PowerStarter-Web?
