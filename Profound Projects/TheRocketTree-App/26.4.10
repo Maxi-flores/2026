@@ -68,7 +68,8 @@ Re-run the failed GitHub Action immediately.
 Double-check that the Root Directory for the Powerframe project in Vercel matches its actual folder path in your monorepo.
 Ensure the Framework Preset is still set to Next.js.
 Is the Powerframe code located in the root of your repository, or is it inside an apps/ folder?
- ===
+
+===
 
 The logs and your new image indicate that while you've upgraded your plan, the pipelines are still failing because 
 of unresolved configuration mismatches and a Vercel API timeout.
