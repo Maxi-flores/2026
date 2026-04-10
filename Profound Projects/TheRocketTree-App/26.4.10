@@ -101,6 +101,21 @@ for a monorepo "rebuild" to fail.
 Can you confirm if your app code is inside an apps/ folder or if it's sitting directly in the root of the repository?
 
 
-
-
 ***** TheRocketTree-Web for PowerStarter-Web?
+
+===
+
+"I am setting up a pnpm monorepo with the following architecture:
+apps/powerframe-bms (Vite)
+apps/the-rocket-tree-app (Next.js)
+apps/power-starter-web (Next.js)
+packages/ui (Shared UI library)
+packages/utils (Shared logic)
+My pnpm-workspace.yaml uses the apps/* and packages/* patterns. Please:
+Configure the package.json for packages/ui and packages/utils to export their content
+using modern exports fields.
+Add these internal packages as dependencies to the package.json of all three apps
+using the workspace:* syntax.
+Provide a turbo.json for the root that handles the build pipeline for both Vite (dist) and Next.js (.next) outputs.
+Ensure apps/powerframe-bms/vite.config.ts is configured to resolve these workspace packages.
+Create a root tsconfig.json with paths so that VS Code correctly recognizes imports across the monorepo."
