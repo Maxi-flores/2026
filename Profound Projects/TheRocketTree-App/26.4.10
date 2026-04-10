@@ -119,3 +119,10 @@ using the workspace:* syntax.
 Provide a turbo.json for the root that handles the build pipeline for both Vite (dist) and Next.js (.next) outputs.
 Ensure apps/powerframe-bms/vite.config.ts is configured to resolve these workspace packages.
 Create a root tsconfig.json with paths so that VS Code correctly recognizes imports across the monorepo."
+
+===
+GitHub Pull Request integrated with Vercel, you already have a powerful CI/CD (Continuous Integration/Continuous Deployment) pipeline started. 
+===
+
+Lets get in businuess and rebuild powerstarter repo competely in order to achieve the exact desired outcome for trt web/app integration pipeline and powerframe bms
+
