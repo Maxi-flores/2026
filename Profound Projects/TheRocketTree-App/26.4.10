@@ -31,3 +31,7 @@ TL;DR: The code is 100% ready. The action_required failure means the GitHub Secr
 (VERCEL_TOKEN, VERCEL_ORG_ID, the 3 project IDs) haven't been added yet, and the Firebase keys 
 need to be entered in Vercel's dashboard. Once both are done, 
 re-run the workflow and everything will deploy cleanly.
+
+
+
+rbFukrbuI8FpuyieRpY9ooCR
