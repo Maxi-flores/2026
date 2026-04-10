@@ -39,4 +39,4 @@ VERCEL_TOKEN	The token you just created
 VERCEL_ORG_ID	Your account/team ID rbFukrbuI8FpuyieRpY9ooCR
 VERCEL_PROJECT_ID_TRT	Project ID from Vercel trt project
 VERCEL_PROJECT_ID_POWERSTARTER	Project ID from Vercel powerstarter project
-VERCEL_PROJECT_ID_POWERFRAME
+VERCEL_PROJECT_ID_POWERFRAME Project ID from Vercel powerframe project
