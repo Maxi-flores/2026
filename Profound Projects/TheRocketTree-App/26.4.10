@@ -68,3 +68,33 @@ Re-run the failed GitHub Action immediately.
 Double-check that the Root Directory for the Powerframe project in Vercel matches its actual folder path in your monorepo.
 Ensure the Framework Preset is still set to Next.js.
 Is the Powerframe code located in the root of your repository, or is it inside an apps/ folder?
+ ===
+
+The logs and your new image indicate that while you've upgraded your plan, the pipelines are still failing because 
+of unresolved configuration mismatches and a Vercel API timeout.
+Even with a better plan, Vercel will fail if it's looking for files in the wrong place. Here is the final checklist to get these green:
+
+1. The "Root Directory" must match your Monorepo
+In your previous turn, you mentioned setting the Root Directory to ./. This is likely the primary cause of the failure for all three.
+Problem: In a pnpm monorepo, the app code is usually in apps/powerframe, apps/trt, etc. If you set the Root Directory to ./, Vercel looks for 
+a package.json in the very top folder and tries to build the entire repo as one single app, which crashes.
+The Fix: Go to Vercel Settings 
+ General for each project:
+Powerframe: Set Root Directory to apps/powerframe (or wherever its package.json lives).
+TRT: Set Root Directory to apps/trt.
+Powerstarter: Set Root Directory to apps/powerstarter.
+
+2. Resolve the "Unexpected Error" (Vercel side)
+The error Error: Unexpected error. Please try again later. () in your logs is a known Vercel CLI issue often caused by conflicting build settings.
+The Fix: In the Vercel Dashboard for all three projects, ensure:
+Framework Preset: Is explicitly set to Next.js.
+Build Command: Is EMPTY (let Vercel auto-detect next build).
+Output Directory: Is EMPTY (let Vercel auto-detect .next).
+
+3. Ignore the Node.js 20 Warnings
+The yellow warnings about Node.js 20 are not causing the failure. They are just notifications that GitHub will update its runners in 2026.
+You can ignore these for now; focus entirely on the red "Exit Code 1" errors.
+Summary of Action:
+Change the Root Directory for each project in Vercel from ./ to their specific folder paths (e.g., apps/powerframe). This is the most common reason
+for a monorepo "rebuild" to fail.
+Can you confirm if your app code is inside an apps/ folder or if it's sitting directly in the root of the repository?
