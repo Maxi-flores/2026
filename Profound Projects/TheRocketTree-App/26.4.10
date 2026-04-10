@@ -40,3 +40,31 @@ VERCEL_ORG_ID	Your account/team ID rbFukrbuI8FpuyieRpY9ooCR
 VERCEL_PROJECT_ID_TRT	Project ID from Vercel trt project - prj_BkSr4mypRnyYgPtodMVJ03ohysIM
 VERCEL_PROJECT_ID_POWERSTARTER	Project ID from Vercel powerstarter project - prj_HoLlhguGHycLupv4dW1CjH6rRGZF
 VERCEL_PROJECT_ID_POWERFRAME Project ID from Vercel powerframe project BMS - prj_9s5bzMMVX0TA4WNXLFNovyb4YTdD
+
+===
+
+This is frustrating, but the log shows a specific type of failure. The "Error: Unexpected error. Please try again later.
+()" coming directly from the Vercel CLI during the Building... phase is a Vercel platform/infrastructure error, not a code or configuration error on your end.
+Because your build succeeded (it reached the "Building" stage and uploaded 819KB), but the Vercel backend "dropped the ball," here is exactly what to do:
+
+1. Immediate Fix: The "Force" Re-run
+Since this is a transient API error, the most effective fix is often just a fresh trigger.
+Action: Go to the GitHub Actions tab, select the failed run, and click "Re-run failed jobs."
+Why: This bypasses the specific Vercel instance that hit the "Unexpected error."
+
+2. Verify "Root Directory" for Powerframe
+In your previous message, you mentioned setting the root directory to ./.
+Check: Is the powerframe code actually in the root of the repo, or is it inside apps/powerframe?
+Action: If it's in a subfolder, the Root Directory in Vercel Settings must match that path (e.g., apps/powerframe).
+If it's set to ./ but the code is in a subfolder,
+Vercel tries to build the whole monorepo as one app, which often causes these timeout/API errors.
+
+3. Check Vercel Usage/Limits
+Sometimes "Unexpected error" is a masked "Rate Limit" or "Build Minute" error.
+Action: Log into your Vercel Dashboard and check the Activity or Usage tab. Ensure you haven't hit a concurrency limit for your plan 
+(especially if 3 builds try to start at the exact same millisecond).
+Summary of Actions
+Re-run the failed GitHub Action immediately.
+Double-check that the Root Directory for the Powerframe project in Vercel matches its actual folder path in your monorepo.
+Ensure the Framework Preset is still set to Next.js.
+Is the Powerframe code located in the root of your repository, or is it inside an apps/ folder?
