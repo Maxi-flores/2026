@@ -1,0 +1,29 @@
+2. Local Growth with Claude CLI
+To develop each repo separately while maintaining the monorepo structure, use Claude CLI (claude) with localized context files.
+
+Isolated Context: Place a CLAUDE.md file in each sub-directory (e.g., apps/powerstarter/CLAUDE.md).
+Root CLAUDE.md: Define monorepo build commands (e.g., pnpm build).
+App-specific CLAUDE.md: Define local test commands and architectural patterns for just that app.
+
+The "Claude Workflow":
+cd apps/powerstarter && claude: Start a session focused only on the portfolio logic.
+Use /plan to map out the API handler without touching the Unity code.
+Run /commit within the sub-directory. Claude CLI will intelligently draft a commit message based on local changes.
+Global Integration: Periodically run claude from the root directory to perform cross-repo audits or update the shared Prisma schema.
+
+3. Seamless Monorepo Architecture
+To make the repos "talk" to each other without friction, follow these structural rules:
+Component	Responsibility	Shared Link
+packages/db	Holds schema.prisma and exports a Singleton Prisma Client.	All apps import from @repo/db.
+packages/ui	Shared design tokens (colors, icons) based on RootPlanner states.	Used by Powerstarter web.
+apps/powerstarter	Hosts the API Handlers that Unity also calls.	Acts as the central gateway.
+
+Procedural Implementation Steps
+Initialize the Shared DB
+In packages/db, define your schema with provider = "prisma-client-js" and a custom output path so all apps can find the generated types easily.
+Build the Sync API
+Create a route in Next.js that accepts POST requests from the RootPlanner. Use a Zod schema (shared in packages/validation) to ensure the BMS data is valid before it hits the database.
+Unity Integration
+Configure Unity to call the powerstarter API endpoints using UnityWebRequest. Since the logic is shared in the monorepo, you can export your TypeScript types as a JSON reference for Unity's C# classes to match.
+
+Would you like the specific terminal commands to set up this packages/db singleton so your apps can start sharing the Prisma client immediately?
