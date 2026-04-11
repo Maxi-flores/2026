@@ -38,3 +38,42 @@ Legal: KVK Registration (Holland).
 Skill: AZ-900 (Azure Fundamentals).
 Action: Upgrade Powerframe BMS into a Live Workflow Hub.
 Should we start by building the "Git-to-BMS" script so your code commits automatically update your project status in the Hub?
+
+>>>
+
+How to implement an tasks option menu and backend diagram logic that appears on the unity game dashboard aswell? And will make 
+an kind of active listing within the previewed project listing menu aswell. And when clicking on the task it will open a new scree
+n with all related info and options, with status, commits, tags, deathline, urgency level, and azure based rootplanner and project base 
+plan step by step with generative steps which point out all the needed dependencies. And lets create a more detailed overview by mapping 
+out the exact open task plans and details like prices and necessary time management, Add on for links to sources and the exact appointment 
+chedule dates connected and synced with user email and agenda. 
+
+>>> 
+
+Implementing a professional task orchestrator in Unity requires bridging the Unity UI Toolkit with the Azure DevOps REST API and Microsoft Graph API. 
+
+1. Unified Dashboard Architecture 
+To create an "active listing" within your project menu, use the UI Toolkit's ListView component. This system efficiently handles dynamic data binding, ensuring your project list stays updated as the backend changes. 
+Task Option Menu: Create a right-click or hover "Options" panel using a VisualElement styled with USS for a sleek, enterprise look. 
+Active Project Listing: Use a ListView to populate tasks. Bind each entry to a C# class that stores unique task IDs. 
+Navigation Logic: When a task is clicked, use a UI Mediator script to hide the list and activate a "Detail View" panel populated with that task's specific data. 
+
+2. Task Detail & Backend Logic 
+The "Detailed Overview" screen should display comprehensive data fetched via REST API calls. 
+Feature Implementation Detail Source 
+Commits & Tags Fetch from _apis/git/repositories/{id}/commits and wit/tags. Microsoft Learn 
+Dependencies Use $expand=relations in work item calls to map Parent/Child links. Stack Overflow 
+Rootplanner Map Azure "Delivery Plans" or "Roadmaps" to visual timelines in Unity. YouTube: Azure Boards 
+Generative Steps Use a custom logic layer to parse "Parent" work items into sub-task lists based on tags. Microsoft Learn 
+ 
+3. Time Management & Schedule Sync 
+To connect appointments and agenda data, integrate the Microsoft Graph API. 
+Email & Agenda Sync: Use the Calendar API to retrieve events for a specified time range. This allows your dashboard to show upcoming project deadlines directly alongside your personal schedule. 
+Detailed Task Planning: Include fields for "Estimated Price" and "Time Management" in the Azure work item custom fields. Fetch these using the Work Item Tracking API. 
+Source Links: Attach URLs as "Hyperlinks" in Azure work item relations; Unity can then open these via Application.OpenURL() when clicked. 
+
+4. Implementation Steps 
+Register App in Azure AD: Obtain a Client ID and Secret to authenticate with Microsoft Graph and Azure DevOps. 
+C# API Client: Write an asynchronous script using UnityWebRequest or HttpClient to fetch JSON data from Azure. 
+UI Data Binding: Map the JSON response to a Serializable class in Unity, then bind these fields to your UI Toolkit elements. 
+Would you like a specific C# code snippet for the Azure DevOps API authentication or the USS styling for the task detail screen? 
