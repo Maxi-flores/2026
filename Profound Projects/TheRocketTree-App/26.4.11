@@ -35,3 +35,43 @@ https://kornelius.dev
 === 
 
 https://github.com/Xiashangning/BigSurface/issues/143#issue-4244439121
+
+===
+
+what do i need to run all the repo's inside the android emulator and tweak it to my unity game setup, until reaching beta version and 
+get google store developer access and publish to the android store?
+
+To move from your current monorepo setup to a published Android app using your PC as the "Command Center," you need to bridge your BMS/Powerstarter logic with the Unity Android pipeline.
+1. Running the Monorepo & Emulator Together
+Since you are using your PC, you can host the entire backend and the emulator on one machine.
+Host the Backend: Run your pnpm dev or Coolify locally on your PC. Your BMS and Powerstarter will be live at localhost:3001.
+The Emulator "Bridge": Install Android Studio and create a "Virtual Device".
+Networking Tip: Inside the Android emulator, localhost refers to the emulator itself. To talk to your PC's monorepo, use the special IP 10.0.2.2 (e.g., http://10.0.2).
+Build the APK: In Unity, go to File > Build Settings, switch the platform to Android, and click Build and Run. Unity will push the app directly into your running emulator. 
+
+2. Tweaking for Unity-Android Beta
+Before reaching Beta, you must satisfy Google’s technical requirements in Unity's Player Settings: 
+YouTube
+YouTube
+Scripting Backend: Change from Mono to IL2CPP.
+Architecture: Enable ARM64 (Google Play no longer accepts 32-bit only apps).
+Keystore: Create a new Keystore (found under Publishing Settings). This is your digital signature—never lose this file, or you cannot update your app. 
+
+3. Publishing to the Google Play Store
+Once your app is ready for Beta, follow these steps to get into the store:
+Developer Account: Register at the Google Play Console.
+Cost: A one-time $25 USD fee. No annual renewals.
+New Requirement (2024): You must verify that you have access to a physical Android device for testing to complete account verification.
+App Format: Export your game as an Android App Bundle (.aab) instead of an APK for the final store upload.
+Beta/Internal Testing: Start with an Internal Testing release in the Play Console. You can invite up to 100 testers using their email addresses to download the app before it goes public.
+Store Listing: You will need to provide a Privacy Policy URL (you can host this on your Powerstarter portal), high-res icons, and screenshots. 
+
+Summary of Costs & Tools
+Component 	Requirement	Cost
+PC Host	Windows/Linux (16GB RAM recommended)	$0 (Existing)
+Developer Fee	Google Play Console Account	$25 (One-time)
+IDE/Engine	Unity + Android Studio	$0 (Free/Personal)
+Server/Host	Coolify or Local Node.js	$0 (Self-hosted)
+Pro-Tip: Use the Unity Play Games Plugin if you want to link your BMS Achievements directly to the Google Play Games achievement system. 
+
+Should I help you write the Unity C# script that connects to the 10.0.2.2 address to start testing your first achievement in the emulator?
