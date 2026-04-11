@@ -27,3 +27,11 @@ Unity Integration
 Configure Unity to call the powerstarter API endpoints using UnityWebRequest. Since the logic is shared in the monorepo, you can export your TypeScript types as a JSON reference for Unity's C# classes to match.
 
 Would you like the specific terminal commands to set up this packages/db singleton so your apps can start sharing the Prisma client immediately?
+
+===
+
+https://kornelius.dev
+
+=== 
+
+https://github.com/Xiashangning/BigSurface/issues/143#issue-4244439121
