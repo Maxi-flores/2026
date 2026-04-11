@@ -47,7 +47,8 @@ Penpot json for design tokens and let our ai run these as example or do we have 
 need to run a server concept deployment of the monorepo in order to custimize it with the desired tokens we want to 
 use as complete theme setup
 
-The standard industry approach to managing design tokens across a monorepo (e.g., React and Unity) is a Build-Time Transformation Pipeline. Instead of a live server syncing tokens at runtime, you use a "Single Source of Truth" that compiles into platform-specific assets during your development or build process. 
+The standard industry approach to managing design tokens across a monorepo (e.g., React and Unity) is a Build-Time Transformation Pipeline. Instead of a live server 
+syncing tokens at runtime, you use a "Single Source of Truth" that compiles into platform-specific assets during your development or build process. 
 
 1. The Standard Workflow (The "Handover")
 The industry standard follows a structured flow from design to code: 
