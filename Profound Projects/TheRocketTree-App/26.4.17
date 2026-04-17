@@ -46,3 +46,34 @@ pnpm install
 pnpm -r --filter "./packages/*" run typecheck
 pnpm --filter @sapient/web... build
 pnpm run test
+
+---
+
+}
+You are a senior monorepo + pnpm + Vercel expert.
+
+I have a pnpm monorepo with:
+- pnpm-workspace.yaml
+- packages/* internal packages (@sapient/*)
+- builds correctly locally with pnpm
+
+Problem:
+Vercel is using npm instead of pnpm, causing:
+- workspace packages not installed
+- TypeScript cannot resolve internal modules
+
+Build logs show:
+- "npm warn Unknown project config shamefully-hoist"
+- "added 1 package"
+
+Tasks:
+1. Force Vercel to use pnpm correctly
+2. Ensure workspace packages are installed and built
+3. Provide exact required setup:
+   - root package.json
+   - pnpm-workspace.yaml
+   - Vercel settings
+4. Add proper monorepo build pipeline (pnpm -r build)
+5. Ensure TypeScript resolution works in production
+
+Give exact file contents and commands. No theory
