@@ -77,3 +77,12 @@ Tasks:
 5. Ensure TypeScript resolution works in production
 
 Give exact file contents and commands. No theory
+
+===
+
+corepack enable
+corepack prepare pnpm@9.15.4 --activate
+pnpm install                          # generates pnpm-lock.yaml
+git add pnpm-lock.yaml
+git commit -m "chore: add pnpm-lock.yaml for Vercel"
+git push
