@@ -1,0 +1,40 @@
+You are a senior TypeScript + monorepo + Vercel deployment expert.
+
+I have a monorepo using internal packages like:
+- @sapient/shared-types
+- @sapient/bms-sync
+- @sapient/semantic-core
+
+Folder structure:
+- /packages/*
+- root tsconfig.json
+- using pnpm locally (works locally)
+
+Deployment: Vercel
+
+Build error:
+TypeScript cannot resolve internal packages:
+"Cannot find module '@sapient/...'"
+Also:
+"Cannot find name 'process'"
+
+Important context:
+- Vercel is using npm instead of pnpm
+- I see warnings about pnpm configs (shamefully-hoist)
+
+What I need:
+1. Diagnose why Vercel cannot resolve workspace packages
+2. Provide exact steps to:
+   - Make Vercel use pnpm correctly
+   - Ensure workspace packages are built and linked
+3. Fix TypeScript resolution for monorepo packages
+4. Provide exact file changes for:
+   - package.json (root)
+   - pnpm-workspace.yaml
+   - tsconfig.json
+5. Include commands I should run locally before deploy
+
+Be precise and assume this is a production deployment.
+
+===
+
