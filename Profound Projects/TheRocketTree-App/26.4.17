@@ -38,3 +38,11 @@ Be precise and assume this is a production deployment.
 
 ===
 
+cd /home/runner/work/Sapient/Sapient
+corepack enable
+corepack prepare pnpm@9.15.4 --activate
+rm -f package-lock.json
+pnpm install
+pnpm -r --filter "./packages/*" run typecheck
+pnpm --filter @sapient/web... build
+pnpm run test
