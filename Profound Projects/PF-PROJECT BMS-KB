@@ -1,0 +1,9 @@
+Profound BMS KB
+The ProfoundProjects architecture integrates a static JavaScript time planner with Obsidian through local
+storage, data structures, and markdown exports for tasks, goals, and events [1]. It uses a client-side conversion 
+pipeline to transform planner data
+into structured Markdown with YAML metadata, enabling visualization within the Obsidian Projects plugin [1].
+To bridge the planner's JavaScript logic and markdown data, use the prompt provided in the response to configure 
+Obsidian Copilot for schema mapping and synchronization, or for more details on implementing the system, review 
+the documentation in
+Obsidian Copilot.
