@@ -38,3 +38,45 @@ YouTube
 YouTube
  +1
 Would you like the specific terminal commands to set the environment variables on your server?
+
+===
+
+Could i use tailscale or vercel instead of ngrok?
+Yes, you can use Tailscale instead of ngrok, and it is actually the preferred method for most users because it is more secure and creates a permanent private connection. Vercel, however, is not a direct replacement for ngrok in this workflow and serves a completely different purpose. 
+Medium
+Medium
+ +3
+Tailscale: The "Private Tunnel" (Recommended)
+Tailscale creates a secure "Mesh VPN" between your devices. Once installed on both your remote Mucho3D server and your local Blender machine, they act as if they are on the same Wi-Fi. 
+Medium
+Medium
+ +1
+Persistent IP: Unlike ngrok, which often gives you a new URL every time it restarts, Tailscale gives your server a stable IP address (e.g., 100.x.y.z) that never changes. 
+DEV Community
+DEV Community
+Security: Your Ollama/MCP traffic is encrypted and only accessible to your own devices. You don't have to open any ports to the public internet. 
+Medium
+Medium
+Blender Setup: In your Blender MCP Add-on settings, you simply enter your server's Tailscale IP: http://100.x.y.z:11434. 
+DEV Community
+DEV Community
+Vercel: The "Web Host" (Not a Tunnel)
+Vercel is a platform for hosting websites and serverless functions. It cannot create a tunnel to your local machine like ngrok or Tailscale. 
+Medium
+Medium
+ +1
+Why it won't work for your goal: Vercel is "serverless," meaning it only runs code for a few seconds when a page is loaded. It cannot maintain the permanent, heavy connection required to run a local Ollama model or control Blender in real-time. 
+Northflank
+Northflank
+ +1
+The common confusion: You might see tutorials for Vercel MCP support, but this is for developers building AI apps on the web, not for linking your own private 3D server to your desktop Blender. 
+Vercel
+Vercel
+ +1
+Summary Comparison
+Feature 	ngrok	Tailscale	Vercel
+Best For	Quick public testing	Permanent private link	Hosting a website/app
+URL Type	Public (randomized)	Private (static)	Public (your-app.vercel.app)
+Security	High (if authenticated)	Highest (VPN-based)	Standard (Web security)
+Effort	Single command	Install & Login	Requires code deployment
+Would you like a step-by-step on how to authorize your server's IP address within Tailscale for your Blender connection?
