@@ -1,0 +1,40 @@
+Yes, your Mucho3D server (Ollama/MCP) can function as a remote host that connects directly to your local Blender instance. This allows you to offload heavy AI computations to a powerful hosted machine while seeing the 3D results generated in real-time on your own computer. 
+YouTube
+YouTube
+ +1
+Connection Architecture
+The connection between your remote Mucho3D server and local Blender typically works in one of two ways: 
+The AI Client as the Bridge: Your AI interface (like the Claude Desktop App or Cursor) acts as the middleman. It connects to the Remote Ollama/MCP server via the internet and then sends commands to your Local Blender over a local network port (default is often 9876). 
+GitHub
+GitHub
+ +3
+Direct Server-to-Blender: The remote server connects directly to your local IP. This usually requires a "tunnel" (like Cloudflare Tunnels or ngrok) to bypass your home router's firewall and give your local Blender a reachable address. 
+Reddit
+Reddit
+How to Set It Up
+Configure the Server: On your Mucho3D machine, set the environment variable OLLAMA_HOST=0.0.0.0 to allow it to listen for connections from outside its own local network. 
+YouTube
+YouTube
+ +1
+Establish a Secure Tunnel: Use a service like Tailscale or Cloudflare to create a secure path between the two machines. This provides a stable IP or URL that doesn't change. 
+Reddit
+Reddit
+Point Blender to the Host:
+Open your Blender MCP Add-on preferences.
+Change the Ollama URL from http://localhost:11434 to your remote server's address (e.g., http://your-server-ip:11434). 
+GitHub
+GitHub
+ +2
+Start the Listener: In Blender, press N to open the sidebar, go to the BlenderMCP tab, and click Connect/Start Server. 
+GitHub
+GitHub
+ +2
+Benefits of This Setup
+Offloaded GPU Load: Blender can use 100% of your local GPU for viewport rendering, while the remote Mucho3D server handles the AI text-to-3D generation. 
+YouTube
+YouTube
+Consistent Environment: You can keep your complex Ollama models and MCP configurations on one stable server and access them from any laptop or computer running Blender. 
+YouTube
+YouTube
+ +1
+Would you like the specific terminal commands to set the environment variables on your server?
