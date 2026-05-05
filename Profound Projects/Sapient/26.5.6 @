@@ -1,0 +1,322 @@
+You are implementing the foundation for an open-source 2D “diagram-as-engine” playground.
+
+Goal:
+Create a knowledgebase-integrated game engine routing layer where draw.io diagrams act as executable maps, prompt surfaces, routing graphs, and state machines.
+
+The system must load into the current codebase without replacing existing app structure.
+
+Core concept:
+- A draw.io .drawio XML file is the source of truth.
+- Each mxCell node is a routeable game/logic entity.
+- Each edge is a transition.
+- Metadata on nodes drives prompting, routing, filtering, and execution.
+- The frontend renders this as a 2D playground map.
+- “Godmode” allows inspection, stepping, jumping, replaying, and prompt execution.
+
+Implement this as the base architecture for:
+1. Knowledge base integration
+2. Main game engine routing
+3. Prompt-in-place interaction
+4. Diagram-driven state progression
+5. Live docs-as-code diagram deployment
+
+Required directory structure:
+
+/src
+  /engine
+    /diagram
+      parseDrawio.ts
+      diagramTypes.ts
+      graphBuilder.ts
+      metadata.ts
+
+    /runtime
+      engineState.ts
+      router.ts
+      traversal.ts
+      replay.ts
+
+    /prompting
+      promptRegistry.ts
+      promptExecutor.ts
+      promptTemplates.ts
+
+    /knowledgebase
+      kbRegistry.ts
+      kbResolver.ts
+      kbTypes.ts
+
+    /godmode
+      inspector.ts
+      filters.ts
+      commandBus.ts
+
+  /components
+    /diagram
+      DiagramPlayground.tsx
+      DiagramNodeOverlay.tsx
+      DiagramInspector.tsx
+      DiagramControls.tsx
+
+  /public
+    /diagrams
+      main-engine.drawio
+      main-engine.png
+
+/scripts
+  generate-main-engine-diagram.ts
+
+/.github/workflows
+  diagram-engine.yml
+
+Diagram metadata schema:
+Every executable mxCell node should support these attributes:
+
+data-logic-id
+data-node-type
+data-route
+data-prompt-id
+data-kb-ref
+data-entry
+data-priority
+data-tags
+data-state
+data-next
+data-condition
+data-camera-x
+data-camera-y
+data-camera-zoom
+
+Node types:
+- entry
+- route
+- decision
+- prompt
+- knowledge
+- system
+- scene
+- action
+- terminal
+
+Example node:
+
+<mxCell
+  id="node-kb-query"
+  value="Ask Knowledgebase"
+  vertex="1"
+  parent="1"
+  data-logic-id="kb.query"
+  data-node-type="knowledge"
+  data-route="/engine/kb/query"
+  data-prompt-id="kb-context-query"
+  data-kb-ref="core.engine.routing"
+  data-next="node-decision"
+  data-camera-x="420"
+  data-camera-y="260"
+  data-camera-zoom="1.3">
+  <mxGeometry x="360" y="220" width="160" height="80" as="geometry"/>
+</mxCell>
+
+Implement TypeScript types:
+
+type DiagramNode = {
+  id: string
+  label: string
+  logicId: string
+  nodeType: DiagramNodeType
+  route?: string
+  promptId?: string
+  kbRef?: string
+  entry?: boolean
+  priority?: number
+  tags: string[]
+  state?: string
+  next: string[]
+  condition?: string
+  camera?: {
+    x: number
+    y: number
+    zoom: number
+  }
+  geometry: {
+    x: number
+    y: number
+    width: number
+    height: number
+  }
+}
+
+type DiagramEdge = {
+  id: string
+  source: string
+  target: string
+  label?: string
+  condition?: string
+}
+
+type DiagramGraph = {
+  nodes: Record<string, DiagramNode>
+  edges: DiagramEdge[]
+  entryNodeId: string
+}
+
+Implement parser:
+- Fetch /diagrams/main-engine.drawio
+- Parse XML with DOMParser
+- Extract mxCell nodes with vertex="1"
+- Extract mxCell edges with edge="1"
+- Read custom data-* attributes
+- Build DiagramGraph
+- Resolve entry node by data-entry="true" or first nodeType="entry"
+
+Implement router:
+- Maintain currentNodeId
+- stepForward()
+- stepBack()
+- jumpTo(logicIdOrNodeId)
+- getAvailableTransitions()
+- evaluateCondition(condition, engineContext)
+- routeToNode(nodeId)
+
+Engine state:
+
+type EngineState = {
+  graph: DiagramGraph | null
+  currentNodeId: string | null
+  history: string[]
+  variables: Record<string, unknown>
+  mode: "play" | "godmode" | "replay"
+  activeFilters: {
+    nodeTypes: string[]
+    tags: string[]
+    kbRefs: string[]
+  }
+}
+
+Prompt-in-place system:
+- If active node has data-prompt-id, resolve it from promptRegistry
+- Combine prompt template with:
+  - current node metadata
+  - current route
+  - current knowledgebase reference
+  - engine variables
+  - previous node history
+- Return a ready-to-send prompt string
+- Do not call an external AI API yet; expose prompt text for integration
+
+Prompt registry example:
+
+const promptRegistry = {
+  "kb-context-query": {
+    title: "Knowledgebase Context Query",
+    template: `
+Use the current engine node as context.
+
+Node:
+{{node}}
+
+Knowledgebase reference:
+{{kbRef}}
+
+Route:
+{{route}}
+
+History:
+{{history}}
+
+Task:
+Resolve the next best logic step and explain what knowledgebase files should be loaded.
+`
+  }
+}
+
+Knowledgebase integration:
+- Implement kbRegistry mapping kbRef values to local paths
+- Example:
+  core.engine.routing -> /knowledgebase/engine/routing.md
+  core.prompting.logic -> /knowledgebase/prompting/logic.md
+  core.diagram.schema -> /knowledgebase/diagram/schema.md
+- Implement kbResolver.resolve(kbRef)
+- Return metadata only for now:
+  - kbRef
+  - path
+  - title
+  - tags
+
+Godmode:
+- Show current node
+- Show metadata
+- Show available transitions
+- Show generated prompt
+- Allow jump-to-node
+- Allow filtering by nodeType, tag, kbRef
+- Allow step forward and step back
+- Allow replay from entry
+
+Frontend:
+Create DiagramPlayground.tsx:
+- Loads graph on mount
+- Shows embedded draw.io diagram or PNG fallback
+- Adds HTML overlays for nodes based on geometry
+- Highlights active node
+- Clicking an overlay jumps to that node
+- Camera centers on node.camera if present, otherwise node geometry center
+- Inspector panel shows metadata and generated prompt
+
+Do not require complex rendering yet.
+A simple absolutely positioned 2D map is acceptable.
+
+GitHub Action:
+Create .github/workflows/diagram-engine.yml:
+- Runs on push
+- Installs Node
+- Runs generate-main-engine-diagram.ts
+- Installs draw.io desktop and xvfb
+- Exports high-resolution PNG
+- Moves .drawio and .png into /public/diagrams
+- Leaves Vercel to deploy from repository state
+
+Generator script:
+Create scripts/generate-main-engine-diagram.ts.
+It should generate a valid mxGraphModel with:
+- Entry node
+- Knowledgebase query node
+- Decision node
+- Prompt node
+- Route node
+- Terminal node
+- Edges between them
+- All required metadata populated
+
+Initial map flow:
+entry.start
+  -> kb.query
+  -> decision.route
+  -> prompt.generate
+  -> route.execute
+  -> terminal.done
+
+Acceptance criteria:
+- App can load /diagrams/main-engine.drawio
+- Parser returns a valid DiagramGraph
+- Runtime starts at entry.start
+- User can step through the flow
+- User can click a node to jump
+- Godmode inspector displays metadata
+- Prompt text updates based on active node
+- Knowledgebase references resolve to local KB paths
+- PNG snapshot is generated by workflow
+- All code is modular and ready for future AI model integration
+
+Implementation constraints:
+- Use TypeScript.
+- Prefer React components.
+- Avoid vendor lock-in.
+- Do not hardcode business logic into UI components.
+- Keep diagram parsing, routing, prompting, and KB resolving separate.
+- Add clear comments where future AI execution will plug in.
+- Do not remove existing application code.
+- Add this as a new engine layer.
+
+Final implementation objective:
+Build the base routing layer for a diagram-driven 2D playground where the knowledgebase, prompt engine, and game engine all share the same visual map as their source of truth.
