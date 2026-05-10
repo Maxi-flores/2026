@@ -1,2 +1,2 @@
 # 2026
-Camino europeo
+Routa de importancia
