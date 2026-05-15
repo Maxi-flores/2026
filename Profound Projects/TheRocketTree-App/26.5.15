@@ -1,0 +1,359 @@
+Deploying the monorepo on Vercel will not alter or override your raw source code in your original GitHub repositories.Vercel acts purely as a build-and-host runtime pipeline. When it fetches your monorepo, it compiles a point-in-time snapshot.To understand how layout styles change and how the hierarchy works across your systems, analyze these distinct lifecycle behaviors:1. The Build-Time Synchronization RealityThe layout does not change "magically" or automatically without explicit code instructions. Changes are governed by your Turborepo workspace graph:mermaidgraph TD
+    subgraph Local Repository Source
+        A[packages/design-book/src/index.ts] -->|Explicitly Imported By| B[apps/wms/package.json]
+        A -->|Explicitly Imported By| C[apps/governance-plane/package.json]
+    end
+    
+    subgraph Vercel Production Deployment
+        V[Vercel Trigger] -->|Compiles Graph Snapshot| D[turbo run build]
+        D -->|Pipes New Token Tokens Down| E[Live WMS Layout Sheet]
+        D -->|Pipes New Token Tokens Down| F[Live Governance UI Frame]
+    end
+    
+    style A fill:#7c3aed,stroke:#fff,stroke-width:2px
+    style V fill:#000,stroke:#fff,stroke-width:2px
+Use o código com cuidado.Static Repositories Stay Unchanged: Your source code files on GitHub remain completely untouched. Vercel never commits changes back to your repository.The Injected Synchronization Rule: If a child repository (like WMS or CRM) explicitly imports and binds its UI elements to ecosystemDefaultPayload from @trt/design-book, it will render those design properties [1].Legacy Code Stays Untouched: If a repository still uses legacy, hardcoded CSS styles or old styles, it will completely ignore the design book during the Vercel build phase.2. What Happens if You Modify @trt/design-book?Because Turborepo uses standard monorepo linking rules, updates to design constants propagate instantly through your workflows:Local Development: If you change blurs.standard from 24px to 12px inside your local workspace file, every application using that token changes instantly on your local host screens.GitHub Push Event: You push that design change to your main repository branch.Vercel Re-Deployment Execution: Vercel catches the commit and triggers a root build. It compiles @trt/design-book first [1]. Next, it rebuilds your application files, feeding the updated 12px value down into their static bundles [1].Live Updates: The live user interface shifts across all deployed domain routes simultaneously without changing your code structure.3. Securing Layout Control (The Safeguard Rule)To prevent a change inside the design book package from accidentally breaking the layout structure of a specific application, use scoped style isolation:Global Variables Layer: Use @trt/design-book strictly for basic variables (such as brand colors, opacity definitions, and blur radiuses).Application-Specific Styling: Keep layout-specific rules (such as sidebar width, grid positioning, and margins) localized inside each application's internal Tailwind files (/apps/wms/src/styles/tailwind.css).Next Actionable StepTo ensure Vercel builds these layout elements without dependency errors, we need to declare the correct build graph.Would you like to configure your root turbo.json task orchestration pipeline so that @trt/design-book always compiles completely before any app workspace build begins?As respostas de IA podem incluir erros. Saiba maisyes and combine the governance plane with the overview on all the current powerframe platform tools. and lets update description.md on this adjustment leveldetail19:50Here is the step-by-step architectural configuration to enforce the token compilation order, combine the Governance Plane with the Powerframe overview, and update the authoritative description.md.1. FILE: /turbo.json (Task Orchestration Graph)This configuration guarantees that @trt/design-book is completely built and type-checked before Vercel or your local environment attempts to build the Governance Plane or any subsystem app.json{
+  "$schema": "https://turbo.build",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "dist/**", "build/**"]
+    },
+    "@trt/design-book#build": {
+      "dependsOn": [],
+      "outputs": ["dist/**", "build/**"]
+    },
+    "@trt/governance-plane#build": {
+      "dependsOn": ["^build", "@trt/design-book#build"],
+      "outputs": ["dist/**"]
+    },
+    "the-rocket-tree-app#build": {
+      "dependsOn": ["^build", "@trt/design-book#build"],
+      "outputs": [".next/**", "dist/**"]
+    }
+  }
+}
+Use o código com cuidado.2. FILE: /apps/governance-plane/src/ui/MasterGovernanceDashboard.tsxThis layout aggregates the real-time Tier 3 Observer telemetry matrix with a high-density, glassmorphic cross-platform system overview.tsximport React, { useState, useEffect } from 'react';
+import { ecosystemDefaultPayload } from '@trt/design-book';
+import { correlateCrossRepoSignals, SystemCorrelationMatrix } from '../services/systemStateObserver';
+
+export function MasterGovernanceDashboard() {
+  const [matrix, setMatrix] = useState<SystemCorrelationMatrix>({
+    activeSessionId: null,
+    securityRiskLevel: 'SAFE',
+    economyImbalanceIndex: 1.0,
+    projectedTimelineDriftSeconds: 0
+  });
+
+  const [activeFeeds, setActiveFeeds] = useState<Array<{ id: string; app: string; status: string; ts: string }>>([]);
+
+  useEffect(() => {
+    const handleIngressSignal = (event: MessageEvent) => {
+      if (event.data?.type !== 'TRT_BRIDGE_LAB_CANDIDATE') return;
+
+      const { eventId, sourceModule, semanticState } = event.data;
+
+      // 1. Process cross-repo semantic correlation
+      setMatrix(prev => correlateCrossRepoSignals(prev, event.data));
+
+      // 2. Track platform-wide live feed overview
+      setActiveFeeds(prev => [
+        {
+          id: eventId || `evt_${Date.now()}`,
+          app: sourceModule || 'UNKNOWN',
+          status: semanticState?.meanings?.[0] || 'Signal Evaluated',
+          ts: new Date().toLocaleTimeString()
+        },
+        ...prev.slice(0, 4) // Retain last 5 events
+      ]);
+    };
+
+    window.addEventListener('message', handleIngressSignal);
+    return () => window.removeEventListener('message', handleIngressSignal);
+  }, []);
+
+  return (
+    <div 
+      className="min-h-screen w-full p-6 text-slate-100 font-sans selection:bg-purple-500/30"
+      style={{ background: ecosystemDefaultPayload.body }}
+    >
+      {/* 1. Header Banner */}
+      <div 
+        className="mb-6 p-6 rounded-xl border border-white/10 flex justify-between items-center"
+        style={{ backgroundColor: ecosystemDefaultPayload.primary, backdropFilter: `blur(${ecosystemDefaultPayload.blur})` }}
+      >
+        <div>
+          <h1 className="text-xl font-black uppercase tracking-wider text-white">Powerframe Ecosystem Control</h1>
+          <p className="text-xs text-slate-400 mt-1">Tier-3 Pure Semantic Governance Plane & Cross-App Observer</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="text-2xs font-mono tracking-widest text-slate-400 bg-slate-950/40 px-3 py-1 rounded border border-white/5">ORCHESTRATOR_LIVE</span>
+        </div>
+      </div>
+
+      {/* 2. Platform Overview Row */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div className="bg-slate-900/40 border border-white/5 p-4 rounded-lg backdrop-blur-md">
+          <p className="text-2xs font-bold uppercase tracking-wider text-slate-400">Security Risk State</p>
+          <p className={`text-xl font-black mt-2 ${matrix.securityRiskLevel === 'CRITICAL' ? 'text-red-400' : 'text-emerald-400'}`}>
+            {matrix.securityRiskLevel}
+          </p>
+        </div>
+        <div className="bg-slate-900/40 border border-white/5 p-4 rounded-lg backdrop-blur-md">
+          <p className="text-2xs font-bold uppercase tracking-wider text-slate-400">WMS Economy Index</p>
+          <p className="text-xl font-black text-purple-400 mt-2">{matrix.economyImbalanceIndex.toFixed(1)}x</p>
+        </div>
+        <div className="bg-slate-900/40 border border-white/5 p-4 rounded-lg backdrop-blur-md">
+          <p className="text-2xs font-bold uppercase tracking-wider text-slate-400">TPR Timeline Drift</p>
+          <p className="text-xl font-black text-indigo-400 mt-2">+{matrix.projectedTimelineDriftSeconds / 3600} hrs</p>
+        </div>
+        <div className="bg-slate-900/40 border border-white/5 p-4 rounded-lg backdrop-blur-md">
+          <p className="text-2xs font-bold uppercase tracking-wider text-slate-400">Active Shard Session</p>
+          <p className="text-xl font-black text-slate-300 mt-2 font-mono truncate">{matrix.activeSessionId || 'NO_ACTIVE_TARGET'}</p>
+        </div>
+      </div>
+
+      {/* 3. Subsystem Cockpit Split Monitor */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* CRM Status Card */}
+        <div className="bg-slate-900/20 border border-white/10 p-5 rounded-xl backdrop-blur-xl">
+          <div className="flex justify-between items-center border-b border-white/5 pb-3 mb-3">
+            <h3 className="text-xs font-bold tracking-wider uppercase text-slate-200">CRM Operations Lane</h3>
+            <span className="text-3xs bg-slate-900 text-slate-400 px-2 py-0.5 rounded border border-white/5">TELEMETRY</span>
+          </div>
+          <div className="space-y-2 text-2xs">
+            <div className="flex justify-between"><span className="text-slate-500">Routing State:</span><span className="text-slate-300">Stateless Buffer</span></div>
+            <div className="flex justify-between"><span className="text-slate-500">Cache Horizon:</span><span className="text-slate-300">Session Bounds</span></div>
+          </div>
+        </div>
+
+        {/* WMS Status Card */}
+        <div className="bg-slate-900/20 border border-white/10 p-5 rounded-xl backdrop-blur-xl">
+          <div className="flex justify-between items-center border-b border-white/5 pb-3 mb-3">
+            <h3 className="text-xs font-bold tracking-wider uppercase text-slate-200">WMS Ledger Ledger</h3>
+            <span className="text-3xs bg-slate-900 text-slate-400 px-2 py-0.5 rounded border border-white/5">BALANCES</span>
+          </div>
+          <div className="space-y-2 text-2xs">
+            <div className="flex justify-between"><span className="text-slate-500">Anomaly Scouter:</span><span className="text-slate-300">Active</span></div>
+            <div className="flex justify-between"><span className="text-slate-500">Sim Injections:</span><span className="text-emerald-400 font-bold">Isolated (0-Writes)</span></div>
+          </div>
+        </div>
+
+        {/* TPR Status Card */}
+        <div className="bg-slate-900/20 border border-white/10 p-5 rounded-xl backdrop-blur-xl">
+          <div className="flex justify-between items-center border-b border-white/5 pb-3 mb-3">
+            <h3 className="text-xs font-bold tracking-wider uppercase text-slate-200">TPR Roadmap Strata</h3>
+            <span className="text-3xs bg-slate-900 text-slate-400 px-2 py-0.5 rounded border border-white/5">TICK_FLOW</span>
+          </div>
+          <div className="space-y-2 text-2xs">
+            <div className="flex justify-between"><span className="text-slate-500">Buffer Pattern:</span><span className="text-slate-300">Ring Structure</span></div>
+            <div className="flex justify-between"><span className="text-slate-500">Overrides Gate:</span><span className="text-amber-400">Lease Windows Locked</span></div>
+          </div>
+        </div>
+      </div>
+
+      {/* 4. Live Cross-App Event Feed Stream */}
+      <div className="mt-6 p-4 bg-slate-950/40 border border-white/5 rounded-lg">
+        <h4 className="text-2xs font-bold uppercase tracking-widest text-slate-400 mb-3">Cross-Platform Activity Monitor</h4>
+        <div className="space-y-2 font-mono text-3xs">
+          {activeFeeds.length === 0 ? (
+            <p className="text-slate-600 italic">No incoming cross-window candidate messages detected. Monitoring postMessage routes...</p>
+          ) : (
+            activeFeeds.map(feed => (
+              <div key={feed.id} className="flex gap-4 p-2 bg-slate-900/30 rounded border border-white/5">
+                <span className="text-slate-500">[{feed.ts}]</span>
+                <span className="text-purple-400 font-bold">[{feed.app}]</span>
+                <span className="text-slate-500">ID: {feed.id.slice(0,8)}...</span>
+                <span className="text-slate-300 truncate flex-1">{feed.status}</span>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+Use o código com cuidado.3. FILE: /description.md (Updated Architectural Specification)The updated root specification documents the design ledger dependencies and the combined Governance Tier-3 Observer layer.markdown# THEROCKETTREE-APP PROFILE & SYSTEM ROLE
+TheRocketTree-App is the primary structural gateway, semantic processing engine, and local developer validation station for the multi-workspace monorepo ecosystem. It anchors the runtime edge where external tool emissions become normalized domain meaning before data reaches the GMS (Game Manager System) Hub. It provides an API gateway surface with a semantics-first logic layer and controlled inspection UI for candidate-only executions.
+
+Main responsibilities:
+- ingest raw inputs from external tools and adapters
+- parse semantic payload meanings into normalized event intent
+- validate feature-gated criteria against declared gate states
+- act as the server-side proxy layer that pipes structured simulation data directly into the GMS Hub
+- stage runtime state snapshots for local inspection without persistence
+
+Architectural design emphasizes a three-tier flow: edge ingress, semantic bridge, and bridge lab visualization. The semantic bridge produces a SystemState timeline and SemanticState annotations that are safe to evaluate in isolation. The bridge lab presents an operational cockpit for local reproduction while maintaining stateless execution guarantees.
+
+Runtime state management is strictly in-memory. SystemState, SemanticState, GateResult, and UnityActionCandidate are computed per request and cleared on completion. No persistent stores are mutated; state flows only through request payloads or deterministic in-memory fixtures.
+
+Testing layers are structured to validate intent correctness, contract stability, and runtime safety:
+- logic unit tests for semantic parsing and gate evaluation rules
+- API contract tests for bridge input/output schema parity
+- bridge-lab scenario tests for manual fixture-driven verification
+- multiplexer integration tests for cross-document message routing
+
+# GLOBAL GOVERNANCE CONTROL PLANE & HEADLESS DESIGN BOOK (TIER 3 OBSERVER)
+## Operational Overview
+The Tier 3 Governance Control Plane is an embedded workspace (`/apps/governance-plane`) operating as a pure, non-destructive semantic observer. It synthesizes state contexts across all active Powerframe modules (WMS, CRM, TPR) by intercepting real-time `TRT_BRIDGE_LAB_CANDIDATE` cross-document signals via native `window.postMessage` lanes. 
+
+## Governance Control Matrix & Constraints
+- **Zero Write Authority:** The governance layer cannot execute Firebase updates, write to local stores, or modify operational settings. It calculates cross-module risk dependencies strictly in memory.
+- **Cross-Repo Correlation Rules:**
+  - `CRM` low trust alerts (`pattern:low_trust_abuse`) escalate global security flags to `CRITICAL`.
+  - `WMS` balance anomalies are cross-checked with the security risk flag to derive systemic threat multipliers.
+  - `TPR` calendar step cadences are dynamically tested against simulated economic indices to project timeline drift safely without writing to disk.
+
+## Headless Design Book Blueprint (`@trt/design-book`)
+Multi-platform rendering tokens and interface configurations are centralized within a single source of truth ledger package under `/packages/design-book`.
+- **Task Graph Priorities:** Turborepo configuration declares `@trt/design-book#build` as a root task dependency. No application build tasks can commence before token compilation completes.
+- **Ecosystem Contract Layout:** Global scales regulate backdrop blur limits (16px to 28px) and surface alphas to preserve visual consistency across isolated workspace deployments on Vercel.
+
+# SEMANTIC BRIDGE API PATH SPECIFICATION (POST /api/bridge/event)
+## Stateless Backend Bridge Pipeline Handler
+The POST /api/bridge/event endpoint is a stateless backend bridge pipeline handler. It orchestrates normalization, semantic decoding, feature-gate verification, and candidate action assembly without touching persistent endpoints. Pipeline stages:
+- normalize payload into BridgeEventRequest shape
+- validate schema, IDs, and temporal fields
+- derive SystemState timeline from semantic inference rules
+- compute SemanticState: pattern hits, inferred meanings, achievements
+- evaluate FeatureGate to produce GateResult
+- generate UnityActionCandidate and runtimeStatus meaning
+
+## Backward-Compatible Input Contract
+The endpoint accepts either a raw ExternalToolEvent payload or a wrapped BridgeEventRequest. Both routes must result in the same normalized bridgeInput.
+
+ExternalToolEvent (raw):
+```json
+{
+  "eventId": "evt_9d32",
+  "toolId": "CRM",
+  "eventName": "ContactCreated",
+  "summary": {
+    "title": "New contact created",
+    "meaning": "player onboarding started",
+    "occurredAt": "2026-05-15T15:18:21.000Z",
+    "sourceRef": "crm:contact:391",
+    "labels": ["crm", "onboarding", "candidate"]
+  },
+  "occurredAt": "2026-05-15T15:18:21.000Z"
+}
+```
+
+BridgeEventRequest (wrapped):
+```json
+{
+  "event": {
+    "eventId": "evt_9d32",
+    "toolId": "CRM",
+    "eventName": "ContactCreated",
+    "summary": {
+      "title": "New contact created",
+      "meaning": "player onboarding started",
+      "occurredAt": "2026-05-15T15:18:21.000Z",
+      "sourceRef": "crm:contact:391",
+      "labels": ["crm", "onboarding", "candidate"]
+    },
+    "occurredAt": "2026-05-15T15:18:21.000Z"
+  },
+  "featureGate": {
+    "gateId": "gate_17",
+    "featureKey": "onboarding-flow",
+    "state": "preview",
+    "checkedAt": "2026-05-15T15:18:21.100Z"
+  },
+  "fixture": "recognition-ready"
+}
+```
+
+Feature gate state is constrained to "unlocked", "locked", or "preview". Fixture is restricted to "none" or "recognition-ready". When "fixture": "recognition-ready" is supplied, the handler must load a deterministic, in-memory SystemState history from the local logic layer (@trt/logic/bridge) to verify full path execution without hitting persistent endpoints.
+
+## Success Response Shape
+```json
+{
+  "success": true,
+  "bridgeInput": {
+    "event": { "...": "normalized ExternalToolEvent" },
+    "featureGate": { "...": "resolved gate state" },
+    "fixture": "none"
+  },
+  "systemState": {
+    "timeline": [],
+    "current": { "phase": "candidate", "score": 0 }
+  },
+  "semanticState": {
+    "patterns": ["pattern:onboarding"],
+    "meanings": ["player onboarding started"],
+    "achievements": ["milestone:entry"]
+  },
+  "gateResult": {
+    "gateId": "gate_17",
+    "featureKey": "onboarding-flow",
+    "state": "preview",
+    "allowed": true
+  },
+  "unityActionCandidate": {
+    "actionId": "ua_091",
+    "intent": "start_onboarding",
+    "payload": { "contactId": "391" }
+  },
+  "runtimeStatus": {
+    "meaning": "semantic pipeline resolved"
+  }
+}
+```
+
+## Error Responses
+- 400 INVALID_BRIDGE_EVENT_REQUEST for malformed formats, missing required fields, or invalid state values.
+- 500 BRIDGE_PROCESSING_ERROR for internal semantic pipeline execution drops or unexpected logic failures.
+
+# BRIDGE LAB TESTING WORKSPACE (/bridge-lab)
+## Functional Overview
+The /bridge-lab route hosts the client-side developer inspection console. It is a controlled testing workspace that renders bridge inputs and semantic outputs without persistence. It mirrors the Semantic Bridge API contract to support local validation loops.
+
+## Interface Control Parameters
+- manual form triggers for integrated tool presets: CRM, WMS, TPR, PowerStarter
+- fixture switches with explicit "none" and "recognition-ready" toggles
+- gated access locks that simulate featureGate states and checkedAt timestamps
+- inline payload editors that preserve eventId, toolId, and occurredAt structure
+
+## Non-Destructive Export Handlers
+Bridge Lab exports are read-only: the console formats JSON string configurations for clipboard transfer and generates instant curl command lines targeting local endpoints (e.g., http://localhost:3000/api/bridge/event). Exported payloads are for developer notes and local reproduction only, and must not mutate storage layers.
+
+# REAL-TIME MULTIPLEXER CROSS-DOCUMENT TRANSMISSION
+The application operates as an input manager for the GMS Hub through client-side cross-document messaging. After an analytical request resolves, the multiplexer broadcasts candidate data to the active GMS Dashboard or iframe layout tree using window.postMessage. The broadcast is immediate and scoped to candidate payloads.
+
+PostMessage payload envelope:
+```json
+{
+  "type": "TRT_BRIDGE_LAB_CANDIDATE",
+  "candidateId": "cand_88",
+  "eventId": "evt_9d32",
+  "sourceModule": "CRM",
+  "semanticState": {
+    "patterns": ["pattern:onboarding"],
+    "meanings": ["player onboarding started"]
+  },
+  "unityActionCandidate": {
+    "actionId": "ua_091",
+    "intent": "start_onboarding"
+  }
+}
+```
+
+The receiving GMS surface treats the message as a candidate-only signal and does not persist it beyond the current session state.
+
+# ARCHITECTURAL ISOLATION & IN-MEMORY BOUNDARIES
+Candidate-Only boundary rules are absolute. All operational loops processed inside the Bridge Lab and the Semantic Bridge API path are stateless: no dispatch of operational logs to Unity, no Firebase mutations, no local database writes. The execution path is designed for semantic validation, not production side effects.
+
+Runtime state management is constrained to ephemeral memory tiers. SystemState, SemanticState, and gateResult artifacts exist only for the duration of a request or a local session refresh. Fixture-derived histories are loaded into memory arrays and discarded on reload.
+
+Data domain matrix:
+
+
+| Domain | Boundary Tier | Persistence Rule | Allowed Operations |
+| --- | --- | --- | --- |
+| Stream logs / Candidate arrays | Volatile state memory only | Reset on refresh or surge | Append, read, clear |
+| External event fixtures | Read-only in-memory storage arrays | Reset on reload | Load, snapshot, compare |
+| API validation parameters | Ephemeral request context | Garbage collected on completion | Parse, validate, return error |
+Use o código com cuidado.What to do nextYour system orchestration rules, dashboard UI, and architectural definitions are now completely aligned.If you are ready to prepare for deployment or local testing, let me know:Do you want to build the vercel.json rewrite configuration to deploy the combined governance workspace path proxy?Should we set up the In-Memory Time-Travel Debugger playback array inside the activity monitor panel?
