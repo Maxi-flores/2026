@@ -1,0 +1,107 @@
+Shifting your multi-domain architecture (crm, tpr, wms, gms) to an on-premises, bidirectional, and separately managed hybrid ecosystem alters your infrastructure rules.Because public cloud gateways like Vercel cannot bind directly to local machine local networks, you must replace the cloud edge layer with an On-Premises Hybrid Ingress Grid. This ensures that browser-based web dashboards and desktop/embedded in-game apps talk to each other over ultra-low latency local connection loops.1. Hybrid On-Premises Domain ArchitectureIn an on-premises deployment, your vercel.json file is ignored by local machine traffic. Control must be transferred to a local Containerized Reverse Proxy (Caddy or Nginx) that mirrors subdomains locally using custom local machine entries (*.powerframe.local) [Description]:mermaidgraph TD
+    subgraph On-Premises Host Machine
+        DNS[Local DNS Server <br> *.powerframe.local] -->|Resolves Ingress Traffic| Proxy[Caddy / Nginx Gateway]
+        
+        Proxy -->|Port 3001| CRM[apps/crm - Node Target]
+        Proxy -->|Port 3002| WMS[apps/wms - Node Target]
+        Proxy -->|Port 3003| TPR[apps/time-planner - Node Target]
+        Proxy -->|Port 3004| GMS[apps/gms-hub - Main Shell]
+        
+        Unity[Unity Client Engine] <-->|Bidirectional IPC / Local WebSockets| Proxy
+    end
+    style Proxy fill:#7c3aed,stroke:#fff,stroke-width:2px
+    style Unity fill:#020617,stroke:#334155,stroke-width:1px
+    style DNS fill:#1e1b4b,stroke:#4338ca,stroke-width:1px
+Use o código com cuidado.2. The Local Network Ingress Mapping: CaddyfileCaddy is recommended over Nginx for on-premises development because it automatically handles dynamic zero-config internal SSL certification mapping for custom .local extension trees. Place this file at your monorepo workspace root:File: /docker/Caddyfiletext# On-Premises Domain Orchestration Route Mapping
+gms.powerframe.local {
+    reverse_proxy localhost:3004
+}
+
+crm.powerframe.local {
+    reverse_proxy localhost:3001
+}
+
+wms.powerframe.local {
+    reverse_proxy localhost:3002
+}
+
+tpr.powerframe.local {
+    reverse_proxy localhost:3003
+}
+
+hub.powerstarter.local {
+    reverse_proxy localhost:3005
+}
+Use o código com cuidado.3. Bidirectional Sub-Platform Socket DriverBecause your pipeline must be bidirectional (letting web actions instantly mutate the Unity game memory, and game loops instantly update the WAI portfolio dashboards), cross-document browser postMessage calls must be scaled up to a Local Persistent WebSocket Bridge Engine [Description].File: packages/state-multiplexer/src/onPremiseBridge.tstypescriptexport interface OnPremiseEnvelope {
+  targetDomain: string;
+  actionId: string;
+  sourceModule: 'CRM' | 'WMS' | 'TPR' | 'POWERSTARTER';
+  payload: Record<string, any>;
+}
+
+class OnPremiseBridge {
+  private socket: WebSocket | null = null;
+  private messageListeners: Set<(data: OnPremiseEnvelope) => void> = new Set();
+
+  /**
+   * Initializes the persistent bidirectional communication channel with the local server.
+   */
+  public connect(gatewayUrl: string = "ws://gms.powerframe.local/stream-bridge"): void {
+    this.socket = new WebSocket(gatewayUrl);
+
+    this.socket.onmessage = (event) => {
+      try {
+        const decodedMessage: OnPremiseEnvelope = JSON.parse(event.data);
+        
+        // Broadcast incoming hardware triggers instantly to active memory observers
+        this.messageListeners.forEach((listener) => listener(decodedMessage));
+      } catch (error) {
+        console.error("[On-Premise Bridge] Failed decoding local gateway payload:", error);
+      }
+    };
+
+    this.socket.onclose = () => {
+      console.warn("[On-Premise Bridge] Connection dropped. Retrying local socket handshake in 3s...");
+      setTimeout(() => this.connect(gatewayUrl), 3000);
+    };
+  }
+
+  /**
+   * Dispatches an event envelope back into the Unity Engine or cross-platform tool loops (Bidirectional).
+   */
+  public emitToEcosystem(envelope: OnPremiseEnvelope): void {
+    if (this.socket && this.socket.readyState === WebSocket.OPEN) {
+      this.socket.send(JSON.stringify({
+        ...envelope,
+        _timestamp_unix_ms: Date.now()
+      }));
+    } else {
+      console.error("[On-Premise Bridge] Aborted dispatch: Local runtime socket is disconnected.");
+    }
+  }
+
+  public subscribe(callback: (data: OnPremiseEnvelope) => void) {
+    this.messageListeners.add(callback);
+    return () => this.messageListeners.delete(callback);
+  }
+}
+
+export const onPremiseBridge = new OnPremiseBridge();
+Use o código com cuidado.4. Turborepo Multi-Platform Task PartitioningTo support this hybrid shift, your workspaces must separate standard static single-page web distributions (dist/**) from embedded local executables intended to run directly inside standalone desktop environments or local web views (via Electron, Tauri, or Unity embedded containers).Update your central build execution parameters to isolate compilation targets clean:File: turbo.jsonjson{
+  "$schema": "https://turbo.build",
+  "tasks": {
+    "build:web": {
+      "dependsOn": ["^build:web"],
+      "outputs": ["dist/**"]
+    },
+    "build:embedded": {
+      "dependsOn": ["^build:embedded"],
+      "outputs": ["src-tauri/target/**", "out/**", "build-desktop/**"]
+    },
+    "dev:local": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}
+Use o código com cuidado.5. Why this Grounding Fixes the "Spinning"Offline Independence: The entire setup runs perfectly without relying on external internet routing tables, dropping your Vercel serverless consumption costs down to absolute zero.Dual-Ingress Processing: Your custom useMasterOperationalObserver hook can handle both browser events (window.postMessage) and system events (onPremiseBridge.subscribe) simultaneously, formatting them into the exact same Design Book token properties seamlessly.To begin deploying this on-premises configuration container layer, tell me if you would like to:Configure the master docker-compose.yml multi-container specification to launch all local .local subdomains and the Caddy proxy engine with a single command.Adapt the useMasterOperationalObserver hook to feed on both local WebSocket telemetry loops and browser context components at the same time.
