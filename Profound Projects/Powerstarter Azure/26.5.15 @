@@ -1,1 +1,185 @@
 Ok at this moment trt monorepo ecosystem > powerstarter feed > feed 2 template generator. We have to implement an unity based user project feed build by layout 
+
+===
+
+As we are speaking of our testing enviroments for this multi dashboard systems. i like to add the next logical optic on our two output generated feed systems at Powerhub called powerstarter and WhoAmI "WAI", Portfolio feed generator. Must project all feed on display. within the Powerstarter.dev domain. Sharing entry and output with powerframe (for in game apps tools), and Powerstarter (for game generated output)
+
+>>>
+
+Integrating the PowerStarter (Game Engine Output Engine) and WhoAmI "WAI" (Portfolio Data Matrix) systems under the powerstarter.dev routing space creates a complete data visualization loop.This completes the pipeline by turning your Telemetry Ingress data into Player-Facing Outcomes and Business Portfolios.mermaidgraph TD
+    subgraph PowerStarter Ingress & Egress Channels
+        A[Unity Client Engine] -->|Ingests Raw Game Streams| PS[PowerStarter Workspace]
+        PS -->|Pipes Realtime Feeds| WAI[WAI Portfolio Matrix]
+        PS -->|Emits Data Envelopes| PF[Powerframe In-Game Apps]
+    end
+    style PS fill:#7c3aed,stroke:#fff,stroke-width:2px
+    style WAI fill:#0f172a,stroke:#334155,stroke-width:1px
+    style PF fill:#581c87,stroke:#fff,stroke-width:1px
+Use o código com cuidado.1. Structural Identity RolesTo keep these high-frequency generated feeds isolated from each other, they are assigned strict architectural roles:PowerStarter (Game Generated Output): Consumes live execution signals from Unity and processes them into user-visible telemetry feeds. It shares data instantly with Powerframe to power live in-game overlay tools, apps, and live-ops diagnostics.WhoAmI "WAI" (Portfolio Feed Generator): Acts as the permanent historic ledger. It processes player balances, achievement records, and developer operational profiles into a public portfolio feed on the powerstarter.dev domain.2. Multi-Platform Schema Configuration: powerstarter-bridge.jsonThis configuration file must be added to your central contracts directory. It maps the data rules for the output systems without exposing your databases to security risks:json{
+  "$schema": "https://schemastore.org",
+  "meta": {
+    "routing_domain": "powerstarter.dev",
+    "version": "3.0.0",
+    "enforced_by": "gms_governance_plane"
+  },
+  "feed_systems": {
+    "powerstarter_core": {
+      "channel_id": "game_generated_output",
+      "required_fields": ["session_id", "unity_tick_index", "engine_load_metrics", "active_game_state_flags"],
+      "egress_targets": {
+        "powerframe_in_game_apps": "/api/v1/apps/sync",
+        "local_bridge_lab": "TRT_BRIDGE_LAB_CANDIDATE"
+      }
+    },
+    "who_am_i_portfolio": {
+      "channel_id": "portfolio_feed_generator",
+      "required_fields": ["player_id", "identity_trust_tier", "virtual_asset_totals", "achievement_matrix"],
+      "egress_targets": {
+        "public_portfolio_display": "/portfolio/:player_id",
+        "powerframe_user_profile": "/bms/profile"
+      }
+    }
+  },
+  "layout_sync_tokens": {
+    "powerstarter_feed_panel": {
+      "bg": "rgba(30, 41, 59, 0.4)",
+      "border": "1px solid rgba(124, 58, 237, 0.3)",
+      "accent_glow": "shadow-[0_0_15px_rgba(124,58,237,0.15)]"
+    },
+    "wai_portfolio_matrix": {
+      "bg": "rgba(15, 23, 42, 0.5)",
+      "border": "1px solid rgba(255, 255, 255, 0.1)",
+      "accent_glow": "backdrop-blur-xl"
+    }
+  }
+}
+Use o código com cuidado.3. Implementing the Unified Hook: useEcosystemFeedOrchestrator.tsThis React 18 hook must be added to your Governance Plane to monitor both output systems in real time. It reads incoming browser messages and maps them to your design parameters:typescript// apps/governance-plane/src/hooks/useEcosystemFeedOrchestrator.ts
+import { useState, useEffect, useCallback } from 'react';
+
+export interface FeedPayloadEnvelope {
+  type: 'POWERSTARTER_OUTPUT' | 'WAI_PORTFOLIO_UPDATE';
+  originDomain: string;
+  payload: Record<string, any>;
+}
+
+export interface OrchestratorFeedState {
+  powerstarterStream: any[];
+  waiPortfolioSnapshot: Record<string, any> | null;
+  complianceAlerts: string[];
+}
+
+export function useEcosystemFeedOrchestrator(allowedDomain: string = "powerstarter.dev") {
+  const [feedState, setFeedState] = useState<OrchestratorFeedState>({
+    powerstarterStream: [],
+    waiPortfolioSnapshot: null,
+    complianceAlerts: []
+  });
+
+  const processIncomingFeed = useCallback((envelope: FeedPayloadEnvelope) => {
+    setFeedState((prev) => {
+      const updated = { ...prev };
+
+      if (envelope.type === 'POWERSTARTER_OUTPUT') {
+        // Enforce structural boundary rules for game generated outputs
+        if (!envelope.payload.unity_tick_index) {
+          updated.complianceAlerts.push("PowerStarter event dropped: missing unity_tick_index signature");
+          return updated;
+        }
+        // Limit local memory streams to 100 historical buffer positions
+        updated.powerstarterStream = [envelope.payload, ...prev.powerstarterStream].slice(0, 100);
+      }
+
+      if (envelope.type === 'WAI_PORTFOLIO_UPDATE') {
+        // Map data criteria for WAI portfolios
+        if (!envelope.payload.player_id) {
+          updated.complianceAlerts.push("WAI portfolio sync rejected: missing valid player identification");
+          return updated;
+        }
+        updated.waiPortfolioSnapshot = envelope.payload;
+      }
+
+      return updated;
+    });
+  }, []);
+
+  useEffect(() => {
+    const handleCrossDocumentEvent = (event: MessageEvent) => {
+      // Security Gate: Block untrusted event injections
+      if (event.origin !== `https://${allowedDomain}` && event.origin !== "http://localhost:5173") return;
+      
+      const { data } = event;
+      if (!data || !data.type) return;
+
+      processIncomingFeed({
+        type: data.type,
+        originDomain: event.origin,
+        payload: data.payload
+      });
+    };
+
+    window.addEventListener('message', handleCrossDocumentEvent);
+    return () => window.removeEventListener('message', handleCrossDocumentEvent);
+  }, [allowedDomain, processIncomingFeed]);
+
+  return feedState;
+}
+Use o código com cuidado.4. Shared Display Layout Pattern: EcosystemFeedConsole.tsxThis component uses your shared Design Book variables to ensure that both feeds match the look and feel of your parent platforms cleanly:tsx// apps/governance-plane/src/ui/components/EcosystemFeedConsole.tsx
+import React from 'react';
+import { useEcosystemFeedOrchestrator } from '../../hooks/useEcosystemFeedOrchestrator';
+
+export function EcosystemFeedConsole() {
+  const { powerstarterStream, waiPortfolioSnapshot, complianceAlerts } = useEcosystemFeedOrchestrator();
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6 max-w-7xl mx-auto">
+      
+      {/* 1. POWERSTARTER OUTBOUND DISPLAY (Game Generated Telemetry) */}
+      <section className="bg-slate-900/40 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-2xl">
+        <header className="bg-slate-950/60 p-4 border-b border-white/5 flex justify-between items-center">
+          <div>
+            <h3 className="text-slate-100 font-bold text-sm tracking-wide">PowerStarter Active Output Stream</h3>
+            <p className="text-[10px] text-purple-400 font-mono">Channel: game_generated_output</p>
+          </div>
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+        </header>
+        <main className="p-4 space-y-2 max-h-[400px] overflow-y-auto font-mono text-xs">
+          {powerstarterStream.length === 0 ? (
+            <p className="text-slate-500 italic text-center py-8">Awaiting external engine events...</p>
+          ) : (
+            powerstarterStream.map((feed, idx) => (
+              <div key={idx} className="p-2 bg-slate-950/30 rounded border border-purple-500/20 text-slate-300">
+                [Tick #{feed.unity_tick_index}] State: {feed.active_game_state_flags?.join(', ') || 'IDLE'}
+              </div>
+            ))
+          )}
+        </main>
+      </section>
+
+      {/* 2. WHOAMI "WAI" METRIC LEDGER (Portfolio Matrix Feed) */}
+      <section className="bg-slate-900/40 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-2xl">
+        <header className="bg-slate-950/60 p-4 border-b border-white/5">
+          <h3 className="text-slate-100 font-bold text-sm tracking-wide">WAI Portfolio Status Matrix</h3>
+          <p className="text-[10px] text-indigo-400 font-mono">Channel: portfolio_feed_generator</p>
+        </header>
+        <main className="p-4 text-xs text-slate-300">
+          {!waiPortfolioSnapshot ? (
+            <p className="text-slate-500 italic text-center py-8">No active portfolio data loaded</p>
+          ) : (
+            <div className="space-y-3">
+              <div className="flex justify-between p-2 bg-slate-950/40 rounded border border-white/5">
+                <span className="text-slate-400">Player Passport ID</span>
+                <span className="font-mono text-indigo-300">{waiPortfolioSnapshot.player_id}</span>
+              </div>
+              <div className="flex justify-between p-2 bg-slate-950/40 rounded border border-white/5">
+                <span className="text-slate-400">Ecosystem Trust Tier</span>
+                <span className="font-bold text-emerald-400">{waiPortfolioSnapshot.identity_trust_tier}</span>
+              </div>
+            </div>
+          )}
+        </main>
+      </section>
+
+    </div>
+  );
+}
+Use o código com cuidado.If you would like to expand this system setup, let me know:Should we write the GitHub Copilot Prompt to auto-generate your Vercel deployment multi-domain proxy mapping inside powerstarter.dev?Do you want to configure your Turborepo cache layers to guarantee that testing operations pass without encountering execution bottlenecks?
