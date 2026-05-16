@@ -1,1 +1,9 @@
 Heb je nog vragen? Neem dan gerust contact met ons op via de website. Of telefonische hulplijn, wij zijn iedere dag geopend van af 10:00 tot 22:00. Fijne dag! 
+
+===
+
+To transform Powerframe into a localized, high-density layout generator, we must strip away the network integration layers for now. We will focus purely on a standalone, synchronous deterministic function engine.
+This tool will instantly take raw data structures—such as active game states, simulation metrics, or inventory assets—and map them directly to complete, preview-ready, and themed project presentation pages.
+Here is the decoupled architecture to handle theme assignment, preview generation, and publishing layouts for product management:
+1. FILE: apps/gms-hub/src/modules/powerframe-generator/layoutEngine.ts
+This pure, zero-dependency utility maps raw functional game parameters to visual interface definitions. It relies entirely on structural definitions, allowing you to preview or finalize a project page layout without any cloud or database connections.
