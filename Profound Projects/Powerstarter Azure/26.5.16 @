@@ -1,0 +1,8 @@
+First we have to make our Powerstarter platform and include an landing with user enviroment, linked game feed generator, personal shared project options, milestones included, and personal info aswell. there will be a multi tenant enviroment from the game and without syncronized game option. The game will be an extra smart feature that opens up more tools to plan and create a project.
+
+===
+
+To establish the Powerstarter platform within your monorepo, we will structure it as a multi-tenant workspace. It serves both standard web users (non-synchronized mode) and advanced simulation developers/players (game-synchronized mode). When a Unity Engine context connects, the platform activates enhanced planning features and extra data tooling.
+Here is the implementation to set up the Powerstarter landing infrastructure, data contracts, and routing rules:
+1. FILE: apps/powerstarter/src/types/tenant.ts
+This schema defines the dual-state operational contract. It supports standard standalone productivity metrics and unlocks advanced system engines the moment a game engine binding occurs.
