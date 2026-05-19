@@ -10,7 +10,7 @@ This note captures the decisions, guardrails, and remaining work needed to evolv
 
 **Governance & safety layer.** Governance mechanisms are implemented (GovernanceAuditEngine, contract-ownership review, CI bridge-chain guardrails, runtime validation matrix, smoke checks, deterministic audit flows). The safety rules are explicit: no dispatch, no persistence, no runtime mutation, no autonomous execution, and no external posting. Any new capability must pass a gated sequence—contract review → governance approval → smoke validation → runtime inspection → controlled rollout—before it can be activated.
 
-**Sapient semantic layer.** Sapient includes a morphology system, volatile ring buffer, semantic gateway, override leasing, semantic node activation, and bridge integration. Strategically, Sapient is framed as an advisory semantic intelligence and orchestration-memory substrate. The decision is to keep Sapient **non-authoritative** until governance maturity; it can inform evaluation and recognition, but must not become an uncontrolled source of truth or action.
+**Sapient semantic layer.** Sapient includes a morphology system (SKB SapientKnowledgeBase), volatile ring buffer, semantic gateway, override leasing, semantic node activation, and bridge integration. Strategically, Sapient is framed as an advisory semantic intelligence and orchestration-memory substrate. The decision is to keep Sapient **non-authoritative** until governance maturity; it can inform evaluation and recognition, but must not become an uncontrolled source of truth or action.
 
 ## Roadmap to a Launchable Platform
 
@@ -44,7 +44,7 @@ The final step is productization: onboarding, clear progression, responsive UX, 
 
 ## Biggest Risk Zones
 
-The note highlights four primary risks: architecture fragmentation across systems (TPR ≠ GMS ≠ TRT ≠ Sapient), premature automation, UX complexity explosion, and scope explosion. The prevention pattern is consistent: TRT remains canonical, approvals remain gated, complexity is disclosed progressively, and focus stays on the Unity loop, progression feed, governance, and semantic runtime before ecosystem expansion.
+The note highlights four primary risks: architecture fragmentation across systems (TPR ≠ GMS ≠ TRT ≠ SKB), premature automation, UX complexity explosion, and scope explosion. The prevention pattern is consistent: TRT remains canonical, approvals remain gated, complexity is disclosed progressively, and focus stays on the Unity loop, progression feed, governance, and semantic runtime before ecosystem expansion.
 
 ## Target MVP (3–6 Months) and Strategic Direction
 
