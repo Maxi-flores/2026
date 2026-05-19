@@ -1,0 +1,692 @@
+# TRT V2 Launch Roadmap — Decision & Governance Master Note
+
+## Purpose
+
+This document defines the current state, remaining roadmap, architectural priorities, risk zones, and strategic decisions required to evolve TRT V2 from a validated semantic bridge runtime into a launchable Unity ↔ Web/App ecosystem within the next 3–6 months.
+
+This note acts as:
+
+* Decision framework
+* Governance checklist
+* Architectural alignment document
+* Execution roadmap
+* Scope-control system
+* Runtime safety guide
+* Semantic engine evolution tracker
+
+---
+
+# 1. CURRENT STATE — WHAT IS ALREADY BUILT
+
+## Core Monorepo Foundation ✅
+
+### Status
+
+Stable and operational.
+
+### Built
+
+* Turborepo orchestration
+* pnpm workspace architecture
+* typed package boundaries
+* centralized contract ownership
+* clean dependency graph
+* shared governance structure
+* workspace package exports
+* runtime-safe Vercel deployment
+* CI guardrails
+* smoke validation pipelines
+
+### Decision
+
+TRT remains the canonical contract owner.
+
+No external repo may independently redefine:
+
+* bridge contracts
+* runtime event schemas
+* semantic runtime meaning
+* Unity action contracts
+
+---
+
+# 2. SEMANTIC BRIDGE RUNTIME ✅
+
+## Current Runtime Chain
+
+```text
+External Fixture/Event
+→ Contract Validation
+→ Semantic Processing
+→ Runtime Meaning
+→ Candidate Evaluation
+→ Review Surface
+```
+
+## Implemented Adapters
+
+| Source  | Status |
+| ------- | ------ |
+| TPR     | ✅      |
+| WMS     | ✅      |
+| GMS     | ✅      |
+| Sapient | ✅      |
+| Unity   | ✅      |
+
+---
+
+## Current Runtime Safety State
+
+### Enabled
+
+* contract validation
+* semantic evaluation
+* orchestration inspection
+* runtime meaning generation
+* bridge chain reporting
+
+### Disabled (Intentionally)
+
+* Unity dispatch
+* persistence
+* posting/network actions
+* autonomous actions
+* mutation hooks
+
+---
+
+## Decision
+
+TRT V2 remains:
+
+* local-only
+* deterministic
+* non-autonomous
+
+until governance review systems mature.
+
+---
+
+# 3. GOVERNANCE & SAFETY LAYER ✅
+
+## Implemented
+
+### Governance
+
+* GovernanceAuditEngine
+* contract ownership review
+* CI bridge-chain guardrails
+* runtime validation matrix
+* smoke checks
+* deterministic audit flows
+
+### Safety Rules
+
+* no dispatch
+* no persistence
+* no runtime mutation
+* no autonomous execution
+* no external posting
+
+---
+
+## Decision
+
+All future runtime capabilities must pass:
+
+```text
+contract review
+→ governance approval
+→ smoke validation
+→ runtime inspection
+→ controlled rollout
+```
+
+before production activation.
+
+---
+
+# 4. SAPIENT SEMANTIC LAYER ✅
+
+## Current Capabilities
+
+### Built
+
+* morphology system
+* volatile ring buffer
+* semantic gateway
+* override leasing
+* semantic node activation
+* Sapient bridge integration
+
+---
+
+## Strategic Meaning
+
+Sapient is evolving into:
+
+* semantic intelligence layer
+* orchestration memory layer
+* pattern recognition substrate
+* future knowledge routing engine
+
+---
+
+## Decision
+
+Sapient remains:
+
+* advisory
+* semantic
+* non-authoritative
+
+until governance systems mature.
+
+---
+
+# 5. REMAINING ROADMAP TO LAUNCHABLE PLATFORM
+
+---
+
+# PHASE 1 — REAL ENGINE LOOP
+
+## Goal
+
+Connect live Unity runtime into TRT semantic bridge.
+
+---
+
+## Required
+
+### 1. Unity Runtime Client
+
+#### Needs
+
+* live runtime event posting
+* runtime session state
+* telemetry streaming
+* deterministic bridge formatting
+
+#### Challenges
+
+* WebGL limitations
+* async state synchronization
+* Unity networking lifecycle
+* reconnect handling
+
+#### Decision
+
+Unity remains telemetry/input-only initially.
+
+No autonomous dispatch.
+
+---
+
+### 2. Session Identity System
+
+#### Needs
+
+* Firebase Auth
+* session ownership
+* profile linkage
+* anonymous upgrade flow
+
+#### Challenges
+
+* Unity ↔ web session synchronization
+* reconnect stability
+* runtime ownership consistency
+
+#### Decision
+
+Session ownership becomes mandatory before persistence.
+
+---
+
+### 3. Live Bridge Stream
+
+#### Needs
+
+* live event intake
+* throttling
+* runtime buffering
+* event deduplication
+
+#### Challenges
+
+* bridge spam
+* runtime loops
+* semantic flooding
+
+#### Decision
+
+Introduce rate limiting before enabling live gameplay telemetry.
+
+---
+
+# PHASE 2 — PERSISTENT PLATFORM
+
+## Goal
+
+Convert temporary runtime into real platform state.
+
+---
+
+## Required
+
+### 4. Event Persistence Layer
+
+#### Needs
+
+* BridgeEvent storage
+* Session history
+* Recognition history
+* Semantic outcomes
+
+#### Challenges
+
+* schema evolution
+* replay determinism
+* scaling event volume
+
+#### Decision
+
+Persistence must remain replay-safe and audit-safe.
+
+---
+
+### 5. PowerStarter Feed Integration
+
+#### Needs
+
+* progression feed
+* achievements
+* recognitions
+* milestone rendering
+* journal system
+
+#### Challenges
+
+* meaningful progression UX
+* avoiding shallow gamification
+
+#### Decision
+
+PowerStarter owns user-visible progression output.
+
+---
+
+### 6. GMS Runtime Control Layer
+
+#### Needs
+
+* feature gates
+* route approvals
+* runtime governance
+* semantic overrides
+
+#### Challenges
+
+* governance complexity
+* operator usability
+
+#### Decision
+
+GMS owns:
+
+* routing
+* approval
+* governance decisions
+
+NOT semantic evaluation ownership.
+
+---
+
+# PHASE 3 — UNITY WEB ENGINE
+
+## Goal
+
+Deliver the first real TRT engine experience.
+
+---
+
+## Required
+
+### 7. Unity WebGL Engine
+
+#### Needs
+
+* `/engine`
+* embedded Unity runtime
+* live bridge connectivity
+
+#### Challenges
+
+* browser memory limits
+* WebGL performance
+* websocket/runtime stability
+
+#### Decision
+
+WebGL becomes the first launchable engine surface.
+
+---
+
+### 8. Semantic Visualization
+
+#### Needs
+
+* graph overlays
+* route chains
+* semantic relationships
+* pattern inspection
+
+#### Challenges
+
+* visual overload
+* complexity explosion
+
+#### Decision
+
+Visualization must remain layered and inspectable.
+
+---
+
+### 9. Design Book Integration
+
+#### Needs
+
+* centralized design tokens
+* runtime theming
+* semantic visual states
+
+#### Challenges
+
+* inconsistent UI systems
+* scaling component architecture
+
+#### Decision
+
+Design Book becomes the canonical visual governance layer.
+
+---
+
+# PHASE 4 — CONTROLLED AUTOMATION
+
+## Goal
+
+Enable approved semantic actions safely.
+
+---
+
+## Required
+
+### 10. Candidate Approval System
+
+```text
+event
+→ semantic evaluation
+→ candidate proposal
+→ governance approval
+→ Unity action
+```
+
+#### Challenges
+
+* infinite loops
+* unsafe runtime behavior
+* nondeterministic orchestration
+
+#### Decision
+
+No automatic dispatch without:
+
+* governance review
+* replay validation
+* audit confirmation
+
+---
+
+### 11. Semantic Scoring
+
+#### Needs
+
+* confidence
+* priority
+* recognition strength
+* route weighting
+
+#### Challenges
+
+* noisy semantic output
+* overfitting
+* unexplained behavior
+
+#### Decision
+
+All semantic scoring must remain explainable and inspectable.
+
+---
+
+# PHASE 5 — LAUNCHABLE PLATFORM
+
+## Goal
+
+Convert engineering runtime into real product.
+
+---
+
+## Required
+
+### 12. UX & Product Polish
+
+#### Needs
+
+* onboarding
+* progression clarity
+* responsive runtime UX
+* visual consistency
+
+#### Challenges
+
+* UX complexity
+* semantic abstraction overload
+
+#### Decision
+
+Users should experience:
+
+* progression
+* recognition
+* growth
+* discovery
+
+NOT internal semantic complexity.
+
+---
+
+### 13. Stability & Scaling
+
+#### Needs
+
+* runtime monitoring
+* telemetry dashboards
+* rollback systems
+* deployment stability
+
+#### Challenges
+
+* concurrency
+* runtime debugging
+* infrastructure cost
+
+#### Decision
+
+Operational stability becomes equal priority to feature velocity.
+
+---
+
+### 14. Mobile/App Strategy
+
+## Decision Required
+
+Choose primary direction:
+
+* Web-first
+* Unity-native
+* PWA
+* React Native shell
+
+#### Risk
+
+Fragmented runtime architecture.
+
+---
+
+# 6. BIGGEST RISK ZONES
+
+---
+
+## 1. Architecture Fragmentation
+
+### Risk
+
+```text
+TPR ≠ GMS ≠ TRT ≠ Sapient
+```
+
+### Prevention
+
+TRT remains canonical runtime/contract owner.
+
+---
+
+## 2. Premature Automation
+
+### Risk
+
+* feedback loops
+* unstable semantic runtime
+* uncontrollable orchestration
+
+### Prevention
+
+Maintain approval gates.
+
+---
+
+## 3. UX Complexity Explosion
+
+### Risk
+
+Users cannot understand the system.
+
+### Prevention
+
+Progressive disclosure and layered complexity.
+
+---
+
+## 4. Scope Explosion
+
+### Risk
+
+Too many simultaneous platform directions.
+
+### Prevention
+
+Focus on:
+
+* Unity engine loop
+* progression feed
+* governance layer
+* semantic runtime
+
+before expanding ecosystem scope.
+
+---
+
+# 7. TARGET MVP (3–6 MONTHS)
+
+## Launchable TRT V2 MVP
+
+### Core Features
+
+#### Runtime
+
+* Unity WebGL engine
+* live bridge runtime
+* semantic processing
+
+#### User Layer
+
+* PowerStarter progression feed
+* recognitions
+* milestones
+* session ownership
+
+#### Governance
+
+* GMS approvals
+* feature gates
+* semantic inspection
+
+#### Intelligence
+
+* Sapient node activation
+* route chains
+* semantic scoring
+
+#### Safety
+
+* replay validation
+* audit logging
+* governance review
+
+---
+
+# 8. WHAT SHOULD NOT BE DONE YET
+
+## Avoid
+
+* autonomous AI control
+* autonomous gameplay orchestration
+* uncontrolled persistence
+* multi-agent autonomy
+* MMORPG-scale complexity
+* economic simulation systems
+* uncontrolled runtime mutation
+
+---
+
+# 9. STRATEGIC SUMMARY
+
+TRT V2 is evolving into:
+
+```text
+Semantic Operating System
++
+Governed Runtime Engine
++
+Cross-Platform Progression Layer
++
+Unity/Web Semantic Bridge
+```
+
+rather than:
+
+* a normal app
+* a normal game
+* a normal CRM
+* a normal dashboard
+
+The architecture must therefore prioritize:
+
+* governance
+* determinism
+* replayability
+* semantic clarity
+* runtime safety
+* orchestration discipline
+
+before aggressive feature expansion.
