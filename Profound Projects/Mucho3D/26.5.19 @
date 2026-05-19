@@ -1,0 +1,12 @@
+https://www.reddit.com/r/AiAutomations/comments/1tf5ms3/ive_built_this_ai_real_estate_assistant_heres/
+
+To convert a picture to a mesh in Blender using an MCP (Model Context Protocol) 
+server, you need a local tool or plugin that exposes an AI image-to-3D pipeline 
+to Blender.Recommended Workflow[Blender] <---> [MCP Client Addon] <---> [MCP Server] 
+<---> [AI API / Local Model]
+The MCP Server: You run a server (like a Python script) that connects to a 
+"Picture to Mesh" AI model. This can be a local model (e.g., TripoSR, SV3D)
+or an API service (e.g., Tripo3D, Meshy, CSM).The Blender Client: You use an 
+MCP-enabled Blender add-on or Python console script to call the server's 
+tools.Step-by-Step Implementation1. Setup the MCP ServerCreate an MCP server
+that registers a picture_to_mesh tool. You can use the official Python MCP SDK.
