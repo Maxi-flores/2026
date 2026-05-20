@@ -1,0 +1,49 @@
+Awesome! Claude has laid down a solid technical foundation. 
+It has successfully generated the package manifest links, configured 
+the local MCP workspace loops on port 8080, and constructed the C#
+process handlers to control the Node.js server from inside the editor 
+window.The system note provided by Claude is the critical takeaway here: 
+"Bridge adapter requires manual scene attachment and opt-in posting flag 
+flip once MCP server validated."Here is your immediate operational 
+step-plan to activate, validate, and bind this new AI workspace 
+architecture.🛠️ Execution & Validation Step-Plan1. Scene Binding &
+Component AssemblyReturn to the Unity Editor and wait for the compilation
+progress bar to complete.Open your persistent runtime initialization
+scene (or your active working scene).Right-click the Hierarchy window 
+and choose Create Empty. Name this GameObject [AI_MCP_Bridge].Drag and
+drop the script from Assets/Scripts/Bridge/UnityBridgeAdapter.cs 
+directly onto this new GameObject.In the Inspector panel, look at the
+component fields. Ensure logEventsOnly is checked (true) and leave 
+enablePosting unchecked (false) for initial safe local testing.2. Local 
+Node.js Runtime VerificationOn your top engine menu bar, navigate to
+Window > AI Game Developer > Start Server.Open the Unity Console panel.
+Look for an initialization acknowledgment from the Node server process.
+Troubleshooting Check: If you see a launcher crash error containing 
+"Node command not found", your local development machine requires a 
+global Node.js runtime installation. (Install Node LTS from your system
+terminal or official site to resolve).3. Telemetry and State Change 
+TestingPress the Play button in the Unity Editor.Trigger an action in
+your game that forces the GameModeManager.OnStatusChanged event to fire 
+(such as updating tree growth parameters or switching environmental 
+seasons).Monitor your Unity console. You should see a perfectly 
+serialized printout matching the structured BridgeEventData JSON layout
+containing your real-time treeState telemetry metrics.4. Flip the Active
+Bridge FlagStop the Unity playback state.Select your [AI_MCP_Bridge] 
+GameObject.In the Inspector, check the box to switch Enable Posting to 
+true.Your GitHub Copilot Chat interface using Claude 3.5 Sonnet inside
+VS Code will now have real-time bidirectional access to modify and read 
+your running scene context.📦 Push Infrastructure Changes to Remote 
+RepositoryTo ensure your team has the identical automation ecosystem 
+ready, push these local creations to your remote GitHub tracking branch:
+bashgit status
+# You should see the updated manifest, mcp configurations, and the new
+Editor/Scripts directories
+git add .
+git commit -m "build: activate local unity mcp bridge server architecture
+and telemetry adapter"
+git push origin claude/audit-repository-configuration
+Use o código com cuidado.To finalize the integration, let me know:
+Did you encounter any C# compilation script errors when Unity processed
+the new scripts?Would you like the next set of Copilot multi-turn prompts
+to instruct Claude on creating the initial procedural 3D meshes using
+this new live bridge connection?
