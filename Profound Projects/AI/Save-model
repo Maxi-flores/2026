@@ -1,1 +1,34 @@
+The best approach to use the Claude API without memory expenses is to achieve
+Stateless Efficiency by keeping the "context window" as small and static as 
+possible.Here is the ultimate workflow setup to minimize costs:1. Leverage Prompt 
+Caching (The 90% Discount)Claude offers a feature called Prompt Caching [1]. If 
+your system prompt, tools, or massive reference code blocks stay exactly the same 
+between messages, Claude caches them [1].How it saves money: You get up to a 90% 
+discount on reading those tokens again [1].The Catch: The cache only lasts for 5 
+minutes of inactivity [1].Action: Group your work into focused, fast-paced bursts
+of 5 minutes so you constantly hit the active cache instead of paying full price.
+2. Implement the "Summarize & Restart" StrategyInstead of letting a chat thread g
+row long and expensive, manually manage its memory:Work in a thread until it reac
+hes about 10–15 messages.Send this prompt: "Summarize our progress, the current 
+state of the code, and the next immediate steps in a concise bulleted list."Copy
+that summary, close the chat, open a fresh thread, and paste the summary as your
+new starting point. This completely wipes away the expensive middle history.3. 
+Use "System Prompts" for Static ContextIf you must provide a lot of background in
+formation (like documentation or a project overview), put it inside the System 
+Prompt instead of the user message.Many API UIs (like LibreChat, OpenWebUI, or 
+SillyTavern) have a specific box for "System Prompt."Claude targets the system 
+prompt first for caching, making it much cheaper to keep around.4. Route Easy 
+Tasks to Claude 3.5 HaikuNever use Claude 3 Opus or 3.5 Sonnet for basic tasks.
+Route tasks like text formatting, simple debugging, regex generation, or data 
+parsing to Claude 3.5 Haiku.Haiku is exceptionally fast and costs a mere fraction
+of Sonnet's price, meaning a massive chat history there will only cost cents instead
+of euros.5. Strip Your Code and FilesNever upload an entire folder or a 2,000-line 
+file if you only need help with a 50-line function.Delete comments, logs, and 
+unrelated functions before pasting code.If using coding agents (like Cline or
+Roo Code), change their settings from "Auto-read workspace" to "Manual file 
+selection" so they don't secretly upload your whole hard drive on every turn.
+To help you configure this, which app or UI (e.g., Cursor, Continue extension,
+LibreChat, or custom Python script) are you using to send these API requests?
+
+
 
