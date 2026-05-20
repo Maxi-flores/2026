@@ -1,0 +1,32 @@
+1. Open Unity and wait for compilation.
+2. Create GameObject:
+   [AI_MCP_Bridge]
+
+3. Attach:
+   Assets/Scripts/Bridge/UnityBridgeAdapter.cs
+
+4. Initial safe settings:
+   logEventsOnly = true
+   enablePosting = false
+
+5. Start local server:
+   Window > AI Game Developer > Start Server
+
+6. Press Play.
+
+7. Trigger GameModeManager.OnStatusChanged.
+
+8. Confirm Unity Console prints structured BridgeEventData JSON.
+
+9. Stop Play Mode.
+
+10. Enable active posting:
+    enablePosting = true
+
+11. Test Copilot/Claude scene-context access.
+
+12. Commit:
+    git status
+    git add .
+    git commit -m "build: activate local unity mcp bridge server architecture and telemetry adapter"
+    git push origin claude/audit-repository-configuration
