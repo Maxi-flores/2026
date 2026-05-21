@@ -1,0 +1,17 @@
+2. Configure Your local IDE Settings (VS Code / Cursor)To force Copilot Pro to read your context file and local 
+dependencies accurately, ensure your IDE settings are tuned for monorepos:Open the Whole Monorepo Root: Always
+open your IDE at the absolute root folder containing packages/ and apps/. Do not open individual app sub-folders 
+in separate windows, or Copilot Pro will lose track of @trt/tokens.Verify .gitignore: Make sure packages/tokens/
+dist/ is NOT ignored by Git if you want Copilot to read the compiled files, OR ensure it is built locally. 
+Copilot Pro ignores files that are listed in your .gitignore.Explicitly Reference Files in Chat: If you are using
+the Copilot Chat panel for complex layout migrations, use the #file mechanism to force context:textHow do I style
+this new layout in CRM? #file:packages/tokens/src/tokens.json #file:apps/crm/tailwind.config.ts
+Use o código com cuidado.3. Ensure Local Symlink Resolution (Crucial for Pro)Copilot Pro uses your IDE's language
+server (like TypeScript IntelliSense) to discover auto-completions. Run a fresh install to link your local 
+workspaces:bashpnpm install
+pnpm --filter @trt/tokens build
+Use o código com cuidado.Once the dist/ directory of your core token package is generated locally, your IDE will 
+flag errors or auto-complete @trt/tokens/ts immediately, guiding Copilot Pro to make correct suggestions.Propose 
+Next StepNow that your local Pro environment is optimized to read the tokens, let's tackle the next un-governed 
+application layout bridge.Would you like to build the build-time translation script (sync-layout-tokens.js) for 
+GMS (which uses raw CSS strings and needs static fallbacks), or the dual-compatibility bridge for TPR?
