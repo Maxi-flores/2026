@@ -1,0 +1,16 @@
+To successfully secure your architecture, you need to complete two final steps: Validate the Bridge 
+Integration (Smoke Test) and Lock the Active Workspace Cache for Copilot Pro.Because GMS is now the 
+central nexus between your design tokens, your web apps, and your Unity game engine, these two final
+tasks protect your codebase against future drift. They ensure that your pipeline catches structural 
+errors immediately, and they force Copilot Pro to strictly follow your master layout architecture.Detailed
+Breakdown of the Two Final TasksTask 1: The Monorepo Contract Smoke Test (pnpm ci:bridge-chain)Since your 
+apps are highly interdependent, you need a deterministic validation runner at the root of your monorepo. 
+This runner executes your build files in a strict order matching your dependency chart:Compiles the primitive
+core styles (@trt/tokens).Triggers the GMS bridge translator (sync-master-bridge.js) to parse tokens, generating
+layout-tokens.css and the Unity metadata map layout-matrix.json.Concurrently builds and type-checks CRM, WMS, 
+and TPR against those newly emitted GMS assets.If GMS fails or misses an export key, the contract runner fails
+your local or remote CI pipeline instantly, protecting production.Task 2: Locking Workspace Cache for Copilot 
+ProGitHub Copilot Pro lacks server-side repository indexing configurations. It relies completely on open file 
+tabs, your active workspace directory tree, and a local markdown instruction guide. Creating a dedicated 
+rule-set ensures that when you edit any file inside CRM or WMS, Copilot Pro remembers to read the GMS bridge
+variables rather than inventing raw pixel numbers.
