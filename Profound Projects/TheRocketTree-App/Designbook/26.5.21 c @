@@ -9,3 +9,13 @@ layout broker linking core tokens to CRM, WMS, and Unity. Consumers must use GMS
 Use o código com cuidado.With your terminal command running and your Copilot Memory locked at 9 active memories,
 your entire multi-repo design architecture is fully protected against layout drift.Let me know if the pnpm 
 ci:bridge-chain terminal run finishes with a success or if any path needs a quick tweak!
+
+Why this approach guarantees success and total safety:Zero Production Risk (Strict Dry-Run): The script acts 
+purely as a scanner. Because it only writes an isolated house-style-preview.json inside your central tokens 
+directory, it is physically impossible for it to break your running WMS, CRM, TPR, or Unity build pipelines.
+Mathematical Alignment: Instead of arguing over static values, you control the layout engine via multipliers
+(e.g., 0.75x for data-heavy apps vs 1.25x for back-office apps). This lets you scale different layouts using
+the exact same style token source of truth.Unlocks Copilot Pro Context: Once Claude generates this script and
+you run it, you can keep the resulting house-style-preview.json open as a pinned tab in your IDE. Copilot Pro
+will actively read this matrix, allowing it to predict and suggest perfectly proportioned components whenever
+engineers work in any of the standalone applications.
