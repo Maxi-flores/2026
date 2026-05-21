@@ -19,3 +19,9 @@ the exact same style token source of truth.Unlocks Copilot Pro Context: Once Cla
 you run it, you can keep the resulting house-style-preview.json open as a pinned tab in your IDE. Copilot Pro
 will actively read this matrix, allowing it to predict and suggest perfectly proportioned components whenever
 engineers work in any of the standalone applications.
+
+💡 IDE Context AlignmentTo anchor this securely inside Copilot Pro, make sure you perform these two layout 
+configuration tasks:Save this exact code block to .github/copilot-instructions.md (Codex.pdf p. 1).Open it 
+inside your editor window and keep it pinned as an open tab next to house-style-preview.json while you work
+on your layout features.Would you like me to write a test simulation demonstrating how Copilot Pro refactors
+a UI component under these new instructions?
