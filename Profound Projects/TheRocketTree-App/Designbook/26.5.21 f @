@@ -1,0 +1,41 @@
+💡 Pro-Tip for House Style BlueprintingBecause the AI generates pure code, you can easily guide it to build your 
+final web designbook template from scratch. You can instruct it to look at your house-style-preview.json and 
+generate pure, semantic layout primitives—completely independent of heavy third-party framework dependencies.
+Would you like to write a prompt for Claude to generate a pure, native HTML/CSS master dashboard template using
+the exact proportions calculated from your GMS bridge layer?
+
+Act as a Principal Frontend Engineer and Master UI/UX Architect.
+
+We need to generate the definitive HTML/CSS master template for our synchronized "House Style Designbook". This
+page must be built completely from scratch using pure, native HTML5 semantic tags and raw CSS Custom Properties,
+with zero external component libraries, zero frameworks (No Tailwind, No Bootstrap), and zero third-party 
+dependencies.
+
+The template must model a complex administration dashboard and ingest layout geometry directly from our GMS
+Master Bridge output contract.
+
+Please generate a zero-placeholder, production-grade implementation delivering the following code blocks:
+
+1. THE CENTRALIZED CSS CONTRACT HOOKS (:root)
+Provide the standard CSS variable block matching the exact variables emitted by our GMS bridge:
+- Base-8 Spacing Scale: `--gms-space-0` through `--gms-space-8`.
+- Content Constraints: `--gms-container-max` and the strict TPR legacy track roof `--gms-content-ceiling: 1300px;`.
+- Global Responsive Breakpoints: `--gms-breakpoint-sm: 640px;`, `--gms-breakpoint-md: 768px;`, `--gms-breakpoint-lg:
+1024px;`.
+
+2. THE PROPORTIONAL HOUSESCALING UTILITIES
+Implement explicit, isolated CSS utility classes reflecting our designbook proportional matrix choices:
+- `.l-wms-density`: Applies a strict 0.75x modifier mathematically to paddings and grid gaps for high-density tabularenvironments.
+- `.l-crm-spacious`: Applies a 1.25x modifier to spacing blocks for back-office forms and canvas sections 
+(mapping our semantic section-y and section-y-sm parameters).
+- `.l-tpr-split`: Restricts content width strictly to the 1300px ceiling with zero horizontal visual shifting.
+
+3. THE SEMANTIC MASTER INTERFACE STRUCTURE (Pure HTML5 & Native CSS Grid/Flexbox)
+Write a completely clean, semantic single-file or split-file web output comprising:
+- A responsive, fluid Sidebar + Top Header layout shell using native CSS Grid.
+- An analytical main canvas section displaying multi-column widget layouts that gracefully snap into single
+columns matching our global breakpoint boundaries.
+- A split roadmap preview widget mimicking our bidirectional data channel lane view.
+
+Ensure all layout structures use native CSS variables for transitions and typography sizes, features standard 
+clean-code architecture, and is completely responsive using native media queries. Do not truncate the code.
