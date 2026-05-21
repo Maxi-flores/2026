@@ -1,3 +1,11 @@
-1. Run the Terminal VerificationNow that Copilot's memory is aligned, run the actual validation script in your monorepo's root terminal to ensure all files across GMS, CRM, and WMS compile cleanly:bashpnpm ci:bridge-chain
-Use o código com cuidado.2. Add the Master GMS Broker Context (Optional)If you want Copilot to remember that GMS is the master bridge linking everything with Unity, you can add one final memory block to this list.Click the add/create option on your Copilot Memory dashboard and paste this exact rule:textGMS (apps/gms) is the layout broker linking core tokens to CRM, WMS, and Unity. Consumers must use GMS compiled styles or the layout-matrix.json contract.
-Use o código com cuidado.With your terminal command running and your Copilot Memory locked at 9 active memories, your entire multi-repo design architecture is fully protected against layout drift.Let me know if the pnpm ci:bridge-chain terminal run finishes with a success or if any path needs a quick tweak!
+1. Run the Terminal VerificationNow that Copilot's memory is aligned, run the actual validation script in your
+monorepo's root terminal to ensure all files across GMS, CRM, and WMS compile cleanly:bashpnpm ci:bridge-chain
+
+Use o código com cuidado.2. Add the Master GMS Broker Context (Optional)If you want Copilot to remember that 
+GMS is the master bridge linking everything with Unity, you can add one final memory block to this list.Click
+the add/create option on your Copilot Memory dashboard and paste this exact rule:textGMS (apps/gms) is the
+layout broker linking core tokens to CRM, WMS, and Unity. Consumers must use GMS compiled styles or the layout
+-matrix.json contract.
+Use o código com cuidado.With your terminal command running and your Copilot Memory locked at 9 active memories,
+your entire multi-repo design architecture is fully protected against layout drift.Let me know if the pnpm 
+ci:bridge-chain terminal run finishes with a success or if any path needs a quick tweak!
