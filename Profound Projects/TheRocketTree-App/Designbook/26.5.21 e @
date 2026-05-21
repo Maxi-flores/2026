@@ -1,0 +1,61 @@
+Which designtoken imput does it needs to have to integrate with our centralizedlayout-matrix.json?
+
+>>>>
+
+To integrate seamlessly with your centralized/layout-matrix.json (p. 2) without breaking any of the four
+standalone systems, the incoming design tokens file (whether exported from Penpot, Figma Variables, or 
+Tokens Studio) must strictly align with the W3C Design Tokens Community Group specification (p. 1).The 
+GMS compilation engine acts as a strict validator (p. 3). If the input token keys match the structured 
+naming architecture below, the automated pre-build hooks will reliably output your synchronized web CSS
+properties (--gms-*) and Unity floating-point matrix data (pp. 1-2).📥 Required Token Structure (tokens.json)
+The input design tokens file requires three distinct sections to map perfectly to your centralized matrix 
+rules:1. Viewport Breakpoints ($type": "dimension")These feed your grid-splitting engines (p. 2) and tell the
+Unity Canvas Scaler exactly where screen boundaries change.Required Fields: xs, sm, md, lg, xl, 2xlFormat:
+Explicit pixel values (px).json"layout": {
+  "breakpoint": {
+    "xs": { "$value": "360px", "$type": "dimension" },
+    "sm": { "$value": "640px", "$type": "dimension" },
+    "md": { "$value": "768px", "$type": "dimension" },
+    "lg": { "$value": "1024px", "$type": "dimension" },
+    "xl": { "$value": "1280px", "$type": "dimension" },
+    "2xl": { "$value": "1536px", "$type": "dimension" }
+  }
+}
+Use o código com cuidado.2. Base Spacing Scale & App SemanticsThe input file must provide a logical spacing tier
+that maps back-office fluid layouts against compact, high-density environments.Required Fields: scale (base-8 
+variables) and semantic references (section-y, section-y-sm, gutter, padding).json"layout": {
+  "space": {
+    "0": { "$value": "0px", "$type": "dimension" },
+    "1": { "$value": "4px", "$type": "dimension" },
+    "2": { "$value": "8px", "$type": "dimension" },
+    "4": { "$value": "16px", "$type": "dimension" },
+    "8": { "$value": "32px", "$type": "dimension" },
+    "section-y": { "$value": "{layout.space.8}", "$type": "dimension" },
+    "section-y-sm": { "$value": "{layout.space.4}", "$type": "dimension" }
+  }
+}
+Use o código com cuidado.3. Container & Content BoundariesThis provides the absolute constraints needed to 
+enforce the hard layout boundaries.Required Fields: max (standard viewport roof) and contentCeiling 
+(authoritative legacy layout limit).json"layout": {
+  "container": {
+    "max": { "$value": "1440px", "$type": "dimension" },
+    "contentCeiling": { "$value": "1300px", "$type": "dimension" }
+  }
+}
+Use o código com cuidado.🛡️ How the Ingestion Pipeline Matches Your ContractWhen you feed this input token file
+to the monorepo, the GMS Master Bridge automatically evaluates and extracts the data paths into containerMaxWidthContentPx
+(p. 2):Mathematical Extraction: The engine reads {layout.container.contentCeiling} and verifies it equals 
+exactly 1300px (p. 2).Safety Guardrail Trigger: If a designer changes this token to 1350px inside Figma or 
+Penpot and attempts to sync it, the pnpm ci:bridge-chain smoke test will instantly throw a hard error and 
+block the commit (pp. 2-3). It treats layout drift beyond the 1300px ceiling as a contract safety failure 
+(p. 2).Unity Target Normalization: The compilation engine translates the pixel dimension values (e.g., "16px")
+into flat numeric data types (e.g., 16) within layout-matrix.json so the game engine avoids parsing string 
+parameters at runtime (p. 2).🚀 Recommended Verification WorkflowIf you are about to export a modified token 
+JSON file from your design environment into the monorepo workspace, proceed with these commands:Step 1: Place
+your updated input file into packages/tokens/src/tokens.json (p. 1).Step 2: Trigger the local transformation 
+engine to emit layout variables:bashpnpm --filter @trt/apps-gms build
+Use o código com cuidado.Step 3: Execute the automated safety test to ensure all 4 applications (GMS, CRM, WMS,
+TPR) accept the design changes without structural shifting (pp. 2-3):bashpnpm ci:bridge-chain
+Use o código com cuidado.If you would like, let me know:Which design extension or tool (e.g., Tokens Studio, 
+Penpot Native Tokens, Figma Variables via API) are you exporting the JSON from?Should we add an automated JSON
+schema validator into your pre-build script to ensure design file formats never violate your token architecture rules?
