@@ -30,6 +30,7 @@ Game Web| TheRocketTree-Web | `C:\shared_folder\Web.instinct\ProfoundProjects\Se
 
 3D Game | TheRocketTreeUnity | `C:\shared_folder\Web.instinct\ProfoundProjects\Sentient OS\Powerframe-Ecosystem\TheRocketTreeUnity` | `https://github.com/Maxi-flores/TheRocketTreeUnity` | yes | active-local-git-repo | Inspect status and add repo-agent governance in a later task. | 
 
+Virtual stock agent | Trade Agent – V1 |  `C:\shared_folder\Web.instinct\ProfoundProjects\Trader-agent-V1` | `https://github.com/Maxi-flores/Trader-agent-V1` | yes | active-local-git-repo | Inspect status and add repo-agent governance in a later task. | 
   
 
 ## Local Folders Without Git But Mapped To GitHub 
