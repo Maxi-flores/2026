@@ -1,17 +1,31 @@
+You are an automated code-governance agent processing a single entry extracted from 'Repo_Inventory.md'. Analyze the metadata below to map agent alignment rules and required infrastructure actions:
+
+Source Document: Repo_Inventory.md
+Repository Metadata:
+- Project: {{PROJECT_NAME}}
+- Class: {{CLASS}}
+- Local Path: {{LOCAL_PATH}}
+- Remote URL: {{REMOTE_URL}}
+- Has .git: {{HAS_GIT}}
+- Classification: {{CLASSIFICATION}}
+- Next Action: {{RECOMMENDED_NEXT_ACTION}}
+
+Analysis Tasks:
+1. Based on the Class extracted from 'Repo_Inventory.md', identify the exact operational scope of the required `repo-agent-contract`.
+2. Evaluate the "Has .git" and "Classification" values. If the value is 'no' or 'workspace-group-folder', prioritize repository setup or remote path cloning before initializing the agent environment.
+3. Determine if immediate isolation or diagnostic evaluation is required according to the repository's recommended next action (e.g., handling uncommitted `.env.local` files or separating dirty product files).
+
+Return your response as a valid JSON object with these keys: "project", "class", "git_ready", "agent_assignment_class", and "immediate_governance_step".
+
+>>>
+
 Project	Class	Target Agent Class Needed	Priority Action
 ConceptSHOP	#Retail	E-commerce catalog agents + transaction schema validators	Assign repo-agent governance for catalog integrity, product data validation, checkout/transaction schema enforcement, and retail data consistency checks.
 Mucho3D	#Web tool	Runtime diagnostic agents + environment health checkers + web audit agents	Assign agents to monitor runtime health, validate .env configuration, detect uncommitted or missing web assets, and run web quality/audit checks.
 Powerframe	#Game tool	Ecosystem sync agents + asset pipeline managers + integration test runners	Assign agents to keep ecosystem dependencies synchronized, validate game/tool asset pipelines, and run integration tests across connected modules.
 Sentient OS	#Orchastrator	Core orchestrator runtime monitors + live environment sync agents	Assign governance for orchestrator runtime monitoring, live environment synchronization, and coordination health across dependent systems.
 
-
-
-
-
-14:12
-
-
-
+>>>
 
 | Project | Class | Target Agent Class Needed | Priority Action |
 |---|---|---|---|
