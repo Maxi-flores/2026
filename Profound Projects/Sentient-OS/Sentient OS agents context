@@ -1,3 +1,10 @@
+| Project | Class | Target Agent Class Needed | Priority Action |
+|---|---|---|---|
+| ConceptSHOP | #Retail | E-commerce catalog agents + transaction schema validators | Assign repo-agent governance for catalog integrity, product data validation, checkout/transaction schema enforcement, and retail data consistency checks. |
+| Mucho3D | #Web tool | Runtime diagnostic agents + environment health checkers + web audit agents | Assign agents to monitor runtime health, validate `.env` configuration, detect uncommitted or missing web assets, and run web quality/audit checks. |
+| Powerframe | #Game tool | Ecosystem sync agents + asset pipeline managers + integration test runners | Assign agents to keep ecosystem dependencies synchronized, validate game/tool asset pipelines, and run integration tests across connected modules. |
+| Sentient OS | #Orchastrator | Core orchestrator runtime monitors + live environment sync agents | Assign governance for orchestrator runtime monitoring, live environment synchronization, and coordination health across dependent systems. |
+
 You are an expert systems architect specializing in repository governance and multi-agent infrastructure. 
 Analyze the provided repository list and determine which specialized AI agents or governance contracts (repo-agent governance) must be assigned to each project based strictly on its metadata and Class prefix.
 
