@@ -1,0 +1,114 @@
+#REMOTE-AGENTS
+>>>
+You are a Principal Cloud Security Engineer, Linux Kernel Isolation Architect, and Zero-Trust Network Infrastructure Specialist.
+
+### Context:
+The `REMOTE-AGENTS` workspace now implements a high-performance Monorepo architecture (`packages/core-engine/`, `packages/dashboard-3d/`) featuring a force-directed R3F layout canvas and an asynchronous Python MCP WebSocket Bridge (`core/mcp_bridge.py`). This allows users to issue live, remote JSON-RPC `tools/call` requests (e.g., clearing object caches or rewriting `DESIGNATED_AGENTS_LIST.md`). However, exposing live administrative actions, agent state modifications, and low-level code execution routines over raw, unencrypted WebSockets introduces a critical vulnerability vector. Malicious external nodes or compromised peer instances can hijack the socket, inject falsified tool calls, manipulate agent configurations, or execute unauthorized shell escapes on the host runner file system.
+
+### Objective:
+Implement a zero-dependency (Python 3.10+ stdlib only), completely hardened **Zero-Trust Service Mesh Gateway and Kernel Isolation Container Engine** (`core/sandbox_gateway.py`) that wraps the MCP network bridge in strict mutual TLS (mTLS), authenticates tenant scopes via cryptographically signed tokens, and sandboxes all file-system/tool execution vectors using strict kernel-level restrictions (`seccomp` filters and namespace isolation).
+
+### Architectural Blueprint Requirements:
+
+1. **Mutual TLS (mTLS) Cryptographic Network Perimeter (`core/security_mesh.py`)**:
+   - Upgrade the TCP / WebSocket server inside `core/mcp_bridge.py` to require strict mutual TLS (mTLS) using Python’s standard `ssl` library (`ssl.SSLContext`).
+   - Reject any incoming network connections from peer nodes or the `dashboard-3d` client unless they present a cryptographically valid client certificate signed by the central cluster Certificate Authority (CA).
+   - Enforce Perfect Forward Secrecy (PFS) by restricting acceptable ciphers to high-grade modern algorithms (e.g., ECDHE-RSA-AES256-GCM-SHA384).
+
+2. **Multi-Tenant JWT Isolation & Cryptographic Policy Enforcement**:
+   - Parse an asymmetric JSON Web Token (JWT) on connection initiation to establish tenant boundaries.
+   - Map each incoming MCP tool invocation block to its verified tenant security clearance level. If a tenant belonging to `Tenant-B` attempts to trigger a `tools/call` that modifies files or clear caches belonging to `Tenant-A` or the `Remote-Agents-Core` repo, instantly reject the frame, raise an `UnauthorizedAccessAttemptException`, log the telemetry with an FNV-1a hash, and permanently drop the TCP stream.
+
+3. **Hardened Kernel Sandboxing & Seccomp Runtime Engine (`core/kernel_sandbox.py`)**:
+   - Create a low-level process wrapper that isolates the execution space of any `tools/call` or agent script runtime hook (such as rewriting `DESIGNATED_AGENTS_LIST.md`).
+   - Use Python's standard `ctypes` library to bind directly to Linux kernel primitives (`libc.prctl`). Inject strict Linux namespaces (`CLONE_NEWPID`, `CLONE_NEWNET`, `CLONE_NEWNS`) to ensure the agent running the tool cannot see the host network interfaces or root mount directories.
+   - Apply a restrictive Secure Computing Mode (`seccomp-bpf`) filter block. Intercept and block critical system calls, dropping execution rights down to a bare minimum required for basic file-pointer modification (`sys_read`, `sys_write`, `sys_exit`), completely eliminating the risk of arbitrary code compilation or host system escalations.
+
+4. **Zero-Trust Security & Penetration Simulation Suite (`tests/test_sandbox_perimeter.py`)**:
+   - Write a multi-process asynchronous penetration test rig that simulates adversarial cluster behavior.
+   - **Test Case 1 (mTLS Rejection)**: Attempt to connect to the MCP bridge using an unsigned or expired client certificate. Assert that the server drops the TCP handshaking process immediately at the socket level.
+   - **Test Case 2 (Sandbox Escape Deflection)**: Connect with a valid certificate, but transmit a malicious JSON-RPC tool payload containing shell injection characters or attempts to invoke unauthorized system commands (e.g., trying to read `/etc/passwd`). Assert that the `seccomp` filter or namespace boundary blocks the system call instantly, kills the execution slice cleanly, issues a `CRITICAL_SECURITY_VIOLATION` event frame to the proof ledger, and leaves the live production repository completely unmutated.
+
+Generate the clean, strongly typed, standard-library-compliant Python security mesh, kernel sandboxing layer, and exhaustive network attack isolation test suite now. Adhere strictly to production-grade security patterns, preserve backward-compatible MCP hooks, and omit all visual text emojis.
+
+===
+SAPIENT-OS
+
+You are a Principal Monorepo Architect and Full-Stack Systems Engineer specializing in multi-language repository integration, ASGI network loop routing, and unified build pipeline automation.
+
+### Context:
+The `REMOTE-AGENTS` workspace has successfully stabilized its high-performance asynchronous `WorkspaceDAGEngine` and predictive prefetching layers inside a single localized architecture. To make this fully autonomous agent office production-grade, we need to ingest an existing UI/UX frontend repository and restructure the codebase into a clean, modern multi-package Monorepo utilizing NPM/PNPM workspaces.
+
+### Objective:
+Generate the configuration manifests, directory scaffolding configurations, and an asynchronous network API bridge (`core/api_gateway.py`) that exposes the Python backend telemetry events to the frontend UI package over secure, non-blocking HTTP and WebSocket interfaces.
+
+### Architectural Blueprint Requirements:
+
+1. **Monorepo Configuration & Workspace Root Scaffolding**:
+   - Write the root-level `package.json` file defining an automated workspaces pattern targeting `packages/*` paths (`packages/core-engine` and `packages/dashboard-ui`).
+   - Provide a shell automation script or a Makefile configuration that orchestrates a complete system build environment setup: installs node dependencies for the frontend UI, verifies the local Python 3.10+ virtual environments, and verifies that the shared global files (`AGENT_GUIDE_LIST.md`, `DESIGNATED_AGENTS_LIST.md`) remain cleanly mapped across the workspace roots.
+
+2. **Asynchronous Non-Blocking API Bridge (`core/api_gateway.py`)**:
+   - Inside `packages/core-engine/`, implement an asynchronous HTTP and WebSocket network listener loop using standard library building blocks or `fastapi`/`uvicorn` primitives.
+   - Expose endpoints to:
+     * Receive new Project Business Case payloads from the UI and map them directly into a background `WorkspaceTransaction`.
+     * Stream real-time node lifecycle telemetry frames (`DAG_NODE_START`, `DAG_NODE_END`, `PREDICTIVE_CACHE_HIT`) over a non-blocking WebSocket channel.
+   - Ensure the server runtime intercepts `PipelineHaltException` errors and propagates the `DEAD_HALT` JSON fault snapshots straight to the UI display socket without crashing the active daemon instance.
+
+3. **CORS Isolation & Copy-on-Write Frontend Staging Boundaries**:
+   - Configure precise Cross-Origin Resource Sharing (CORS) rules allowing the frontend UI environment to interact safely with the api server loop during isolated parallel compilation passes.
+   - Enforce absolute isolation constraints: Ensure that the UI development web servers (`vite`, `webpack`) completely exclude `.workspace_cache/` and `logs/` paths from their active hot-reloading file system watch trees to eliminate concurrent write collisions.
+
+4. **Monorepo Monolithic Integration Testing Rig (`tests/test_monorepo_integration.py`)**:
+   - Write an asynchronous Python integration test that uses the standard library HTTP client framework to dynamically simulate a real-world web UI session.
+   - Programmatically broadcast a non-linear DAG payload execution call to the running API bridge, verify the returned `202 Accepted` correlation frame, connect directly to the telemetry WebSocket endpoint, and assert that the streamed frames map perfectly to the physical status changes verified within `logs/TELEMETRY_TRACE.json`.
+
+Generate the complete, strongly typed multi-package configuration manifests, api gateway modules, and monorepo integration validation engines now. Adhere to strict parameter boundaries, avoid text emojis, and maintain zero event-loop starvation.
+===
+TRADER-AGENT-V1
+
+>>>
+You are a Senior Backend Engineer specializing in resilient, event-driven Node.js architectures, secure financial APIs, and reliable state-machine ledger implementations. 
+
+Your task is to generate the core backend scaffolding for "Trade-Agent-V1" using Node.js, Express, and native raw SQLite (`better-sqlite3` preferred for clean synchronous transactions). Follow the architectural constraints below strictly. Do not use heavy ORMs.
+
+### 1. Hard Constraints & Security Invariants
+- **Startup Hard-Fail**: Check for `TRADINGVIEW_WEBHOOK_SECRET` on application boot. If missing or empty, log a fatal error and exit immediately (`process.exit(1)`).
+- **Asymmetric Secret Enforcement**:
+  - `POST /webhook/tradingview`: Validate incoming requests against the `x-tradingview-secret` header. If it mismatches, log `AUTH_FAILED` to the `events_journal`, activate a circuit breaker (causing subsequent ingestion requests to return `503 Service Unavailable`), and instantly terminate the server process (`process.exit(1)`).
+  - `POST /api/signals/:id/approve`: Validate against `x-tradingview-secret`. A mismatch here is non-fatal; simply respond with `401 Unauthorized` and do not terminate the process.
+- **Payload Fidelity**: Do not sanitize, trim, or normalize fields during JSON parsing. Keep the verbatim string payload for forensic auditing.
+
+### 2. File to Implement: `src/db/sqlite.js`
+Implement the SQLite ledger with an in-process schema enforcement engine:
+- **Database Initialization**: Resolve path from `TRADE_AGENT_DB_PATH` or default to `data/trade-agent.sqlite`.
+- **Migration Engine (`PRAGMA user_version`)**:
+  - Read current `user_version`. If a legacy migration is required, rename older tables in-place into collision-free snapshots (e.g., `signals_v1`, `events_journal_v1`).
+  - Rebuild the main canonical tables with strict `CHECK` constraints.
+  - Backfill historical data from all snapshot tables in ascending numeric order using `INSERT OR IGNORE` combined with deterministic ID recovery (e.g., `migrated_000000000123`). Ensure historical records are never overwritten or dropped.
+- **Schema Requirements**:
+  - `signals` table: Flat fields (`ticker`, `action`, `price`, `quantity`, `timestamp`), `payload` (JSON string), `raw_payload` (exact request body string), risk metrics (`notional_usd`, `limit_usd`), and placeholders for asynchronous updates (`ai_sentiment`, `ai_confidence`, `ai_summary`).
+  - `events_journal` table: An append-only log storing immutable lifecycle states (`SIGNAL_RECEIVED`, `SIGNAL_REJECTED`, `SIGNAL_STATUS_CHANGED`, `AUTH_FAILED`, `INTERNAL_ERROR`).
+
+### 3. File to Implement: `src/server.js`
+Implement the server pipeline, the synchronous risk evaluation engine, and the required API routes:
+- **Deterministic Risk Engine (Synchronous)**:
+  - Compute `notional_usd = price * quantity`.
+  - Validate against a fixed cap of 10,000 USD (`MAX_NOTIONAL_USD`), also backed by a SQLite `CHECK` constraint via `limit_usd`.
+- **Inbound Webhook Route (`POST /webhook/tradingview`)**:
+  - Enforce the secret check and parsing fidelity.
+  - Run the deterministic risk check immediately.
+  - Write to the database atomically (insert signal + append journal event) within an explicit SQLite transaction.
+  - Respond immediately with exact status codes:
+    - `202 Accepted` + `PENDING_APPROVAL` if passed.
+    - `422 Unprocessable Entity` + `REJECTED_RISK` if risk check fails.
+    - `400 Bad Request` + `REJECTED` if the JSON contract fails validation.
+  - **Fire-and-Forget AI Trigger**: If the signal is accepted (202), asynchronously spawn the AI enrichment module (`src/ai/llm-enrichment.js`) via an un-awaited background promise. The HTTP response must be dispatched immediately and must not wait for the AI generation to complete.
+- **Operator API Routes**:
+  - `GET /health`: Returns application liveness status along with an explicit `paper-only` mode flag.
+  - `GET /api/signals/pending`: Retrieves all signals currently flagged as `PENDING_APPROVAL`.
+  - `POST /api/signals/:id/approve`: Validates operator credentials (non-fatal) and updates signal status for simulated execution.
+
+### 4. Output Formatting
+Provide complete, production-grade, well-commented code files. Ensure robust error boundaries via `try/catch` and appropriate logging semantics.
+
