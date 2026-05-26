@@ -33,7 +33,38 @@ Generate the clean, strongly typed, standard-library-compliant Python security m
 
 ===
 SAPIENT-OS
+1TH
+You are a Principal 3D Graphics Architect, Monorepo Systems Engineer, and Anthropic Model Context Protocol (MCP) Integration Specialist.
 
+### Context:
+The `REMOTE-AGENTS` workspace requires a full paradigm shift for its frontend UI layer. We are discarding standard, heavy data tables and corporate forms. Instead, we are stripping the frontend down to its bare minimum functional footprint: a hyper-lean "Smart Connector Switch" interface that dynamically expands into a visually stunning, polished 3D interaction node-graph using Three.js / React Three Fiber (R3F) and Tailwind CSS. This system must visually map and autonomously reconfigure real-time agent clusters connected via an active Model Context Protocol (MCP) server daemon.
+
+### Objective:
+Generate a zero-boilerplate, multi-package Monorepo blueprint (`packages/dashboard-3d/` and `packages/core-engine/`) featuring a high-performance web interface. The frontend acts as a 3D hardware-accelerated viewport mapping active agent nodes (`ISA`, `SAS`, `CRS`, `BOA`), their live MCP context-tool states, and cross-twin verification matrices over reactive WebSocket data streams.
+
+### Architectural Blueprint Requirements:
+
+1. **Bare-Minimum Smart Connector Frontend Core (`packages/dashboard-3d/`)**:
+   - Strip all complex component trees down to a lean entry-point index leveraging a lightweight toolchain (e.g., Vite + TypeScript).
+   - Implement a localized control overlay featuring "Smart Connector Switches" to manually toggle autonomous loop modes, clear local content-addressed object caches (`.workspace_cache/`), or trigger hard execution overrides (`DEAD_HALT`).
+   - Implement a Three.js / React Three Fiber (R3F) canvas context loop rendering the multi-agent topology as an elegant, fluidly animated 3D network. Nodes represent agents; edge lines represent streaming JSON handshake payloads. Color gradients (e.g., glassmorphic cyan to warning amber) must reflect active state changes (`DAG_NODE_START`, `CACHE_HIT`, `PipelineHaltException`).
+
+2. **Model Context Protocol (MCP) Live Synchronization Bridge**:
+   - Implement a real-time WebSocket connection router (`core/mcp_bridge.py`) inside the Python backend that maps directly to the standard Anthropic MCP specification.
+   - The UI must dynamically poll and listen to active MCP servers, registering available tools, prompts, and server resources exposed by the core backend.
+   - When a user updates an agent's logic rules via the 3D interface, the UI must construct a compliant `tools/call` message, streaming it across the WebSocket layer to hot-reload `DESIGNATED_AGENTS_LIST.md` or re-verify payload schemas live on the file-system.
+
+3. **Autonomous Dynamic Layout Configuration**:
+   - The 3D viewport layout must not be hardcoded. It must read the active workspace state from the backend server initialization frame.
+   - If the `WorkspaceDAGEngine` compiles a new non-linear dependency path with split parallel branches, the 3D graph layout must automatically re-project its spatial coordinate nodes using a force-directed layout calculation to cleanly match the modified execution sequence.
+
+4. **Monorepo Monolithic 3D Pipeline Test Rig (`tests/test_3d_mcp_integration.py`)**:
+   - Write a multi-process integration verification suite verifying that the asynchronous Python engine exposes a clean local loop for both the backend agent worker pools and the frontend 3D viewport frame.
+   - Simulate a continuous stream of telemetry tracking packages (`logs/TELEMETRY_TRACE.json`). Assert that mock WebSocket connections receive accurate sequence metadata, micro-latency numbers, and correct FNV-1a cryptographic tokens, translating them instantly into visual rendering changes on the graphics layer.
+
+Generate the complete, optimized, multi-package configuration manifests, 3D render-loop initializers, and non-blocking asynchronous Python MCP gateway modules now. Adhere to strict typing parameters, prevent event-loop starvation, and omit text emojis.
+>>>
+2TH 
 You are a Principal Monorepo Architect and Full-Stack Systems Engineer specializing in multi-language repository integration, ASGI network loop routing, and unified build pipeline automation.
 
 ### Context:
