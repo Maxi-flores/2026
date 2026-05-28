@@ -29,3 +29,10 @@ Oke but how about autonomous agent with local AI setup on this wizbox?To run a 2
                  ▼
      [Final Execution / Action]
 The "Router" Agent (Llama-3-Groq-8B-Tool-Use or Phi-3-Mini): Use this small, fast model to monitor your inputs, sort through data, and decide if an action needs to be taken. It acts as the gatekeeper.The "Specialist" Agent (Qwen-2.5-Coder-3B-Instruct): Only wake this model up when your router explicitly determines that a Blender script needs to be written or a mesh needs to be generated.3. Crucial Guardrails for a 24/7 Meteor Lake BuildTo prevent your mini-PC from melting, freezing, or hitting memory leaks over weeks of continuous operation, implement these three local guardrails:The Iteration Kill-Switch: Program a strict counter into your autonomous loop. If the agent gets stuck in a self-correction loop trying to fix a broken Blender script, force the code to hard-stop after 5 attempts and write an error log.Prevent Windows Memory Swapping: Ensure your NUC has at least 32GB of RAM. If you run a 3B and an 8B model simultaneously while Windows 11 is running, a 16GB machine will run out of physical memory. It will start writing to your SSD (pagefile swapping), which slows your agent down to zero and destroys your SSD's lifespan.Ollama Timeout Tweak: By default, Ollama keeps models loaded in your RAM for 5 minutes after a request. For a 24/7 agent that triggers randomly, change the environment variable OLLAMA_KEEP_ALIVE to 20m (20 minutes) or -1 (always loaded) so your agent doesn't waste 10 seconds reloading the model from disk every time it wakes up.To help you wire up this 24/7 pipeline, let me know:What is the exact trigger that will make this autonomous agent start working (e.g., an incoming email, a time interval every hour, or a file dropped in a folder)?How many total Gigabytes (GB) of RAM does your Windows Task Manager show right now?I can help you write the Python code structure or n8n node configuration to connect Ollama to your Blender tool safely.
+
+>>>
+
+https://github.com/vercel-labs/agent-browser?tab=readme-ov-file#readme
+
+>>>
+
