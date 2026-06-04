@@ -1,5 +1,23 @@
-Home - Timeline > appears blank on desktop only (phone is fine)
-KnowledgeBase - is showing MCP tekst box withiut WOM media context / automation context aswell
-ai tab has a wrong geader position instead of under body placement
-roadmap engineerjng targets have to be more detailed
-contacts has to have alligened box undesides at desktop mode
+Main conflicts:
+- Home (Timeline section) > appears blank on desktop only (Webpage rendering on phone is fine)
+- KnowledgeBase (Lowest table row) > is showing MCP tekst box without Wommedia context description and Wommedia.nl webpage/logo + (current automation text does not meets the right context description, and also take out the ops and mcp button function, carefully remove it out here)
+- Wommedia has to be better described on its own story telling within the tab section
+- AI (button menu row) > has a wrong positioning on header layout instead of above body placement
+- AI (Lowest table row) > roadmap engineering targets have to be more detailed 
+- Contacts (Table box rows) > has to be alligened contraints, at under side (when using desktop server)
+
+Final appearance adjustment: 
+- Change hovering color on Therockettree tab in the same color: light purple 
+
+Add on:
+- UI/UX: Lets write a bit about my design approach and engineering workflow in dept. 
+1. With building some sort of layout it has to be done by hand and set on from sketch design to preliminary design
+2. As we meet the traditional methods of underlayer, we move to technical skech out for all the header, body, and footer layouts
+3. Like levels on buildings we use pages to place the right walls on the exact layout that is ment for keeping the same structure
+4. And so on we scale up the page rootings on web an app pages by deciding the logical listings of buttons and links
+5. At a early phase we are almost allready publishing concept dev pages with right context and components embeded
+6. It becomes far more suffisticated when reaching an real platform level, but this only get reallity with the use of all the right API's
+7. So each component has a javascript logic and Json that deploys each function onsite and syncs with whole project build logic and design token layouts 
+8. Frontend status depends fully on a choosen webframe which is configured propperly and managed well from DNS and server side deployment
+9. Like buildings we have to maintaint state and it is an never ending process, task automation will become reality soon and we are adapting to it at best usecase 
+10. Designing cost extremely much time and energy even with AI tools, to perfectly refine an concept idea that fits the desired outcome
