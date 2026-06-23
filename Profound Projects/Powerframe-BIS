@@ -1,1 +1,49 @@
+Convert Powerframe-BIS into a static but fully functional Vimexx deployable SPA.
 
+Goal:
+The app must run on fit.powerframe.online using only static hosting through DirectAdmin public_html.
+
+Do not require Node.js in production.
+Do not require npm install on the server.
+Do not require npm run build.
+
+Production should work by uploading:
+- index.html
+- styles.css
+- src/
+- .htaccess
+
+Requirements:
+1. Ensure index.html loads all JS modules using browser-compatible ES module imports.
+2. Ensure all app routes work as SPA routes:
+   /today
+   /tracker
+   /diet
+   /training
+   /progress
+   /body-log
+   /settings
+3. Add .htaccess with fallback rewrite to index.html.
+4. Keep localStorage as the primary offline data layer.
+5. Keep Firebase as optional browser-side sync only.
+6. Ensure the app still works if Firebase is unavailable.
+7. Ensure no Node-only imports are used in browser code.
+8. Keep server.js only for local development, not production.
+9. Update README with Vimexx static deployment steps.
+10. Add a /deploy folder or deployment checklist listing the exact files to upload.
+
+Important:
+This should be a functional static SPA, not a dead HTML export.
+
+Also fix:
+- package-lock.json should not be ignored
+- node_modules must remain ignored
+- .gitignore should include node_modules, .env, dist, build, .firebase
+- package-lock.json should be committed
+
+After implementation, provide:
+- changed files summary
+- exact upload files
+- local test command
+- DirectAdmin target path
+- route test checklist
