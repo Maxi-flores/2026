@@ -1,0 +1,14 @@
+we moeten onze Remote-Agents repo weer bijsturen op Cline en qwen 3.6 
+en dan ook codex om 2 hele belangrijke ontwerp processen te automatiseren. 
+1. Hierbij wil ik design-genome in skills.md opzetten door alle types UI/UX
+themes voor alle repo's in een complete designbook uit te zetten. Traditioneel
+methode die ik nu heb is > grok voor prompt omschrijving van een thema 
+(bijvoorbeeld: liquid glacier - theme), en die tekst prompt zetten we vervolgens 
+samen met een design template font/style/size in OpenAI/Codex. Genereert een 
+image render, maakt een exact profiel voor liquid glacier met een geheel eigen
+design template font/style/size voorbeeld. Deze zetten we dan om in omschrijving
+voor codex, en genereerd een skills.md bovenop een bestaande project repo clone.
+2. eigelijk is dit nog maar het begin want hierna heb je een heel kieskeurig 
+proces nodig in het mappen van de ideale UI.UX, Content/context en werkelijke
+functies voor het doel van de web App. Dus eigelijk een AI die stress testen kan
+doen van je webpage app en ook meteen kan bijwerken.
