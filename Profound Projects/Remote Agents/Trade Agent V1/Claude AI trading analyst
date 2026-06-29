@@ -1,0 +1,239 @@
+Turn Claude Into Your AI Trading Analyst
+Complete Beginner Setup GuideThis guide will show you how to connect Claude to TradingView using the TradingView MCP (Model Context Protocol), allowing Claude to control TradingView, analyze charts, generate Pine Script, automate repetitive analysis, and help you backtest trading strategies.Important: This setup does not automatically place trades. It is an AI assistant for research, chart analysis, scripting, and backtesting. You remain in control of every trading decision.
+Bestapps AI
+Bestapps AI
+Jun 27, 2026
+•
+4 min read
+
+
+
+
+Turn Claude Into Your AI Trading Analyst
+What You’ll Build
+After completing this guide, you’ll be able to ask Claude things like:
+Open BTCUSDT on TradingView
+Scan hundreds of crypto pairs for trading opportunities
+Draw support and resistance automatically
+Write custom Pine Script indicators
+Build complete trading strategies
+Backtest those strategies
+Replay historical markets candle by candle
+Analyze your trading journal
+Compare strategies across different assets
+Instead of spending hours manually checking charts, Claude can perform much of the repetitive work in seconds.
+What You’ll Need
+Before starting, install the following:
+Claude Desktop (or Claude Code if you already use it)
+TradingView Desktop
+Node.js version 18 or newer
+Git
+A TradingView account (Premium plans provide the best experience for advanced features)
+You’ll also need the TradingView MCP project from GitHub:
+https://github.com/tradesdontlie/tradingview-mcp
+Step 1 — Install Node.js
+Visit:
+https://nodejs.org
+Download the latest LTS version and install it normally.
+To verify the installation, open Terminal (Mac/Linux) or Command Prompt (Windows) and type:
+node -v
+You should see something like:
+v20.15.0
+Step 2 — Install Git
+Download Git from:
+https://git-scm.com/downloads
+Install it using the default settings.
+Verify it by typing:
+git –version
+Step 3 — Install TradingView Desktop
+Download the desktop application from:
+https://www.tradingview.com/desktop/
+Sign into your TradingView account.
+Keep the application installed—you’ll need it later.
+Step 4 — Install Claude Desktop
+Download Claude Desktop from:
+https://claude.ai/download
+Install it and log in.
+Close the application once you’re logged in.
+Step 5 — Download the TradingView MCP
+Open Terminal and run:
+git clone https://github.com/tradesdontlie/tradingview-mcp.git
+Then enter the project:
+cd tradingview-mcp
+Install everything required:
+npm install
+This downloads all of the project’s dependencies.
+Step 6 — Configure Claude to Use the MCP
+Claude needs to know where the TradingView MCP server is located.
+Locate Claude’s MCP configuration file.
+On macOS and Linux, it’s typically located at:
+~/.claude/.mcp.json
+If the file doesn’t exist, create it.
+Paste the following configuration:
+{
+“mcpServers”: {
+“tradingview”: {
+“command”: “node”,
+“args”: [
+“/Users/YOUR_USERNAME/tradingview-mcp/src/server.js”
+]
+}
+}
+}
+Replace:
+/Users/YOUR_USERNAME/
+with your own username.
+For example:
+/Users/john/tradingview-mcp/src/server.js
+Save the file.
+Step 7 — Launch TradingView with Remote Debugging Enabled
+This is the step most people miss.
+The MCP communicates with TradingView through Chrome DevTools Protocol.
+You must launch TradingView with Remote Debugging enabled.
+macOS
+Open Terminal and run:
+/Applications/TradingView.app/Contents/MacOS/TradingView –remote-debugging-port=9222
+Windows
+Open Command Prompt:
+%LOCALAPPDATA%\TradingView\TradingView.exe –remote-debugging-port=9222
+Linux
+Run:
+/opt/TradingView/tradingview –remote-debugging-port=9222
+TradingView should now open normally.
+Step 8 — Restart Claude
+Completely close Claude Desktop.
+Open it again.
+Claude should automatically detect the TradingView MCP server.
+Step 9 — Verify Everything Works
+Ask Claude:
+“Run the TradingView health check.”
+If everything is working correctly, Claude should report that it successfully connected to TradingView.
+If it doesn’t connect:
+Make sure TradingView is still open.
+Make sure you launched it with the debugging port.
+Double-check your MCP configuration file.
+Step 10 — Your First Commands
+Start with these simple prompts.
+Open BTCUSDT on TradingView.
+Change the timeframe to 1 Hour.
+Add RSI and Volume indicators.
+Draw the most important support and resistance zones.
+Explain the current trend.
+Identify major resistance levels.
+Find bullish and bearish divergences.
+Summarize today’s market.
+Step 11 — Scan Hundreds of Charts
+One of the biggest advantages of this setup is automated scanning.
+Example prompt:
+“Scan every Binance Futures pair.
+Find only assets where:
+RSI is below 30
+Volume is at least 200% above average
+Price is near a major support level
+A bullish divergence is present
+Rank the strongest opportunities.”
+Instead of manually opening dozens of charts, Claude filters everything for you.
+Step 12 — Generate Pine Script Automatically
+Claude can write TradingView indicators and strategies from plain English.
+Example:
+“Write a Pine Script strategy that:
+Buys when RSI crosses above 30
+Confirms with MACD
+Requires above-average volume
+Uses a 2% stop loss
+Uses a 4% take profit
+Explain every line.”
+You can also ask Claude to:
+Fix broken Pine Script
+Convert indicators into strategies
+Add alerts
+Improve performance
+Optimize code
+Step 13 — Run Backtests
+Once the strategy is created, ask Claude:
+“Run a backtest on BTCUSDT using the 1-hour timeframe.
+Show:
+Win rate
+Net profit
+Maximum drawdown
+Profit factor
+Total trades
+Best-performing period
+Worst-performing period
+Explain the results.”
+Step 14 — Replay Historical Markets
+One of the coolest features.
+Prompt:
+“Replay the last 30 days of BTCUSDT.
+Move candle by candle.
+Whenever this strategy gives an entry:
+Mark the entry
+Mark the stop loss
+Mark the take profit
+Calculate the trade result
+Explain why the trade happened.”
+This allows you to visually review how your strategy would have performed.
+Step 15 — Build Entire Strategies with AI
+Instead of coding manually, simply describe your idea.
+Example:
+“Create a strategy that:
+Buys when:
+Price is above the 200 EMA
+RSI recovers from oversold
+Volume increases
+MACD confirms momentum
+Sells when:
+RSI reaches overbought
+Price closes below the 50 EMA
+Generate the Pine Script and prepare it for backtesting.”
+Step 16 — Analyze Your Trading Journal
+If you export your trades from an exchange or journal, Claude can analyze them.
+Example:
+“Analyze my last 300 trades.
+Find:
+My biggest mistakes
+My most profitable setup
+Which weekday performs best
+Which time of day loses money
+Whether I’m exiting too early
+Suggestions for improving consistency.”
+Step 17 — Create Your Own AI Trading Assistant
+Once everything is working, Claude becomes much more than a chatbot.
+It can help you:
+Scan hundreds of markets
+Generate trading ideas
+Write Pine Script
+Build indicators
+Optimize strategies
+Run backtests
+Compare assets
+Review your journal
+Explain technical analysis
+Save hours of repetitive work every week
+Troubleshooting
+Claude cannot connect
+Make sure TradingView is running with:
+–remote-debugging-port=9222
+MCP doesn’t appear
+Check that your .mcp.json file is correctly formatted and points to the right server path.
+TradingView won’t respond
+Restart both TradingView and Claude.
+Pine Script isn’t working
+Open the Pine Editor inside TradingView before asking Claude to modify scripts.
+Charts don’t load
+Wait a few seconds after opening TradingView before sending commands.
+Useful Prompt Ideas
+Find every crypto pair showing bullish divergence.
+Draw support and resistance on ETH.
+Explain today’s Bitcoin price action.
+Write a Pine Script version of this strategy.
+Improve this indicator without overfitting.
+Compare this strategy across BTC, ETH, SOL, and BNB.
+Replay last week’s market and show every valid entry.
+Analyze my trading journal and identify recurring mistakes.
+Rank today’s strongest crypto setups.
+Explain why this backtest performed well.
+Final Thoughts
+Claude won’t magically make you a profitable trader.
+What it does do is dramatically reduce the time spent on repetitive tasks like scanning charts, coding indicators, reviewing strategies, and testing ideas.
+Instead of manually checking dozens or even hundreds of charts, you can describe what you’re looking for in plain English and let Claude do the heavy lifting. Think of it as an AI research assistant that helps you analyze markets faster, generate ideas, and iterate on strategies more efficiently—while you remain responsible for evaluating the results and managing risk.
