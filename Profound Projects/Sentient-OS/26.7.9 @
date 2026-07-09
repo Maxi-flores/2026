@@ -1,6 +1,6 @@
 (management layer)
 - WOMMedia:
-  Official ES/PT/NL
+  Official ES/PT/NL 
   Finance
 
 - Sentient OS: 
@@ -60,65 +60,59 @@
 Priolisting:
 ___________
 Sentient OS
-- Local Agent (auto-loop)
-- Governance layer
-- Skills.md/guardrail.md (auto-loop)
-- Remote Agent
+1- Local Agent (auto-loop)
+1- Governance layer
+2- Skills.md/guardrail.md (auto-loop)
+1- Remote Agent
 
 WOMMedia:
-- Official ES/PT/NL
-- Finance
-
-Sentient OS: 
-- Local Agent (auto-loop)
-- Governance layer
-- Skills.md/guardrail.md (auto-loop)
-- Remote Agent
+1- Official ES/PT/NL
+2- Finance
 
 Powerframe WAI: 
-- Online Portfolio/Tool stack showcasing
+5- Online Portfolio/Tool stack showcasing
 
 Powerframe HUB: 
-- SQL User Database  
-- Main project account
-- SQL Powerstarter Template/Feed-complete syncing 
-- TRT Credit Account /template theme/business tools account
-- WOMMEDIA Dev framework/tools
+3- SQL User Database  
+3- Main project account
+3- SQL Powerstarter Template/Feed-complete syncing 
+5- TRT Credit Account /template theme/business tools account
+4- WOMMEDIA Dev framework/tools
 
 Powerframe GMS: 
-- Root/branches state/fase
+1- Root/branches state/fase
 
 Powerframe TPR:
-- Planning/task management (No firestore database syncing)
+1- Planning/task management (No firestore database syncing)
 
 Powerframe WMS:
-- Finance at project/enterprise scale 
+1- Finance at project/enterprise scale 
 
 Powerframe CRM:
-- Integration level with CSHOP > Dealinc./Bikerinc.
-- SQL Database setup
+2- Integration level with CSHOP > Dealinc./Bikerinc.
+1- SQL Database setup
 
 Powerstarter HUB/Feed:
-- Connecting diagram
-- WOMMEDIA Dev framework/tools
+3- Connecting diagram
+4- WOMMEDIA Dev framework/tools
 
 Powerstarter SKB:
-- Boost network (Auto-loop)
+2- Boost network (Auto-loop)
   
 TheRocketTree Web/App:
-- Flagship Web/App (UNITY)
+3- Flagship Web/App (UNITY)
 
 ConceptSHOP/CustomSHOP:
-- Templates/styles/types
-- Metric-forms/wireframe-layout 
+1- SQL Database setup
+2- Templates/Metric-forms/wireframe-layout 
 
 Dealinc./Bikerinc.
-- Webshop main/Powerframe CRM (Mockups)
-- Inventory to CSHOP/CRM
+2- Webshop main/Powerframe CRM (Mockups)
+1- Inventory to CSHOP/CRM
 
 Mucho3D/Flink3D
-- MCP > Blender/HOUDINI/UNITY
-- Image to mesh
+3- MCP > Blender/HOUDINI/UNITY
+3- Image to mesh
 
 
 
