@@ -1,13 +1,23 @@
-- Sentient OS:
-  Agent auto-loop
+(management OS)
+- WOMMedia:
+  Official ES/PT/NL
+
+- Sentient OS: 
+  Local Agent (auto-loop)
   Governance layer
   Skills.md/guardrail.md (auto-loop)
+  Remote Agent
 
-- Powerframe HUB:
+- Powerframe WAI: 
+  Online Portfolio/Tool stack showcasing
+
+(SaaS)
+- Powerframe HUB: 
   SQL User Database  
   Main project account
   * SQL Powerstarter Template/Feed-complete syncing 
   * TRT Credit Account /template theme/business tools account
+  WOMMEDIA Dev framework/tools
 
 - Powerframe GMS: 
   Root/branches state/fase
@@ -24,7 +34,12 @@
 
 - Powerstarter HUB/Feed:
   Connecting diagram
+  WOMMEDIA Dev framework/tools
 
+- TheRocketTree
+  Flagship Web/App (UNITY)
+
+(E-commerce)
 - ConceptSHOP/CustomSHOP:
   Templates/styles/types
   Metric-forms/wireframe-layout 
@@ -32,3 +47,8 @@
 - Dealinc./Bikerinc.
   Webshop main/Powerframe CRM (Mockups)
   Inventory to CSHOP/CRM
+
+(Industry)
+- Mucho3D/Flink3D
+  MCP > Blender/HOUDINI/UNITY
+  Image to mesh
