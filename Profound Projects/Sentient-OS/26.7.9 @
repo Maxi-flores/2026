@@ -1,6 +1,7 @@
 (management layer)
 - WOMMedia:
   Official ES/PT/NL
+  Finance
 
 - Sentient OS: 
   Local Agent (auto-loop)
@@ -39,8 +40,7 @@
 - Powerstarter SKB:
   Boost network (Auto-loop)
   
-
-- TheRocketTree
+- TheRocketTree Web/App:
   Flagship Web/App (UNITY)
 
 (E-commerce)
@@ -56,3 +56,99 @@
 - Mucho3D/Flink3D
   MCP > Blender/HOUDINI/UNITY
   Image to mesh
+
+Priolisting:
+___________
+Sentient OS
+- Local Agent (auto-loop)
+- Governance layer
+- Skills.md/guardrail.md (auto-loop)
+- Remote Agent
+
+WOMMedia:
+- Official ES/PT/NL
+- Finance
+
+Sentient OS: 
+- Local Agent (auto-loop)
+- Governance layer
+- Skills.md/guardrail.md (auto-loop)
+- Remote Agent
+
+Powerframe WAI: 
+- Online Portfolio/Tool stack showcasing
+
+Powerframe HUB: 
+- SQL User Database  
+- Main project account
+- SQL Powerstarter Template/Feed-complete syncing 
+- TRT Credit Account /template theme/business tools account
+- WOMMEDIA Dev framework/tools
+
+Powerframe GMS: 
+- Root/branches state/fase
+
+Powerframe TPR:
+- Planning/task management (No firestore database syncing)
+
+Powerframe WMS:
+- Finance at project/enterprise scale 
+
+Powerframe CRM:
+- Integration level with CSHOP > Dealinc./Bikerinc.
+- SQL Database setup
+
+Powerstarter HUB/Feed:
+- Connecting diagram
+- WOMMEDIA Dev framework/tools
+
+Powerstarter SKB:
+- Boost network (Auto-loop)
+  
+TheRocketTree Web/App:
+- Flagship Web/App (UNITY)
+
+ConceptSHOP/CustomSHOP:
+- Templates/styles/types
+- Metric-forms/wireframe-layout 
+
+Dealinc./Bikerinc.
+- Webshop main/Powerframe CRM (Mockups)
+- Inventory to CSHOP/CRM
+
+Mucho3D/Flink3D
+- MCP > Blender/HOUDINI/UNITY
+- Image to mesh
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
