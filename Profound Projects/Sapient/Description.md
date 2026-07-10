@@ -23,7 +23,7 @@ Correct Layer Separation
 
 Powerframe HUB
 └── Sentient OS
-    └── Input / governance / prompt-control plane
+    └── Input / governance / prompt-control plane 
 Powerstarter HUB
 └── Sapient KB
     └── Output / root-branch index / project memory layer
@@ -120,6 +120,7 @@ Sapient KB should be able to index the following root-level ecosystem areas:
 
 WOMMedia
 Sentient OS
+Sapient KB
 Powerframe
 Powerstarter
 TheRocketTree
