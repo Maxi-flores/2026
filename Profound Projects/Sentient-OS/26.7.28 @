@@ -1,3 +1,4 @@
+WOMMedia
 - Sub domains = Sentient-os   sos.powerframe.com/agentworld > deployment
 - Sub domains = Powerframe    account.therockettree.com/new-user > deployment
 - Sub domains = Sapient-kb    skb.powerframe.com/agentworld > deployment
@@ -5,7 +6,18 @@
 - Sub domains = Powerhub      trt.powerframe.com/myprofile > TRT-hub / deployment
 - Sub domains = Portfolio     wai.powerframe.com/me > deployment
 
-
+SOS:
 - Build all Agent management and Powerframe-App actions (p2a) tab overview
 - Codex to repo > pending/finish (state) redeployed/version code
-- 
+
+TRT:
+- Templates / user account / home enviroment HUB 
+
+TPR:
+- Social media / email accounts / Campaign Agents
+
+WMS:
+- Bank method / 
+
+Adds:
+- Admin (co)account / missing portfolios / account logo's 
