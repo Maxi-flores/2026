@@ -1,10 +1,11 @@
-- Sub domains = Sentientos    sos.powerframe.com/agentworld > deployment
+- Sub domains = Sentient-os   sos.powerframe.com/agentworld > deployment
 - Sub domains = Powerframe    account.therockettree.com/new-user > deployment
-- Sub domains = Sapientkb     skb.powerframe.com/agentworld > deployment
+- Sub domains = Sapient-kb    skb.powerframe.com/agentworld > deployment
 - Sub domains = Powerstarter  cshop.concept-shop.com/new-template > deployment
 - Sub domains = Powerhub      trt.powerframe.com/myprofile > TRT-hub / deployment
-- Sub domains = Portfolio     wai.powerframe.com/me > 
+- Sub domains = Portfolio     wai.powerframe.com/me > deployment
 
-- Build all Agent management and (Powerframe-App) actions overview
+
+- Build all Agent management and Powerframe-App actions (p2a) tab overview
 - Codex to repo > pending/finish (state) redeployed/version code
 - 
