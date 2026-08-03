@@ -1,40 +1,40 @@
-Building Governance floors
+Building Governance by floor layers:
 
-Management floor: 
-
-Main Production department:
+Management floor:
 - Sentient-OS
 
-On premises:
+On premises data center: 
 - Sapient-KB
 - Powerframe-DMI
-
-Of premises:
-- Powerframe-BIS
-- Powerframe-WAI
 
 SaaS Production:
 - TRT-web
 - TRT-App
 - TRT-UNITY
+
+User Production department:
 - PowerStarter-Web
 - PowerStarter-Hub
 - PowerStarter-Feed
 - PowerStarter-UP
+
+Full Production department:
 - Powerframe-Web
 - Powerframe-GMS
 - Powerframe-TPR
 - Powerframe-CRM
 - Powerframe-WMS
 
-E-Com
-🍉 2:
+Of premises:
+- Powerframe-BIS
+- Powerframe-WAI
+
+E-Com:
 - Concept-Shop
 - DealInstinct
 - BikerInstinct
 
-Industry
-🍉 3: 
+Industry:
 - WOMMedia
 - Mucho3D
 - Flink3D
