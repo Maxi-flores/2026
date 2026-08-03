@@ -1,46 +1,50 @@
 Building Governance by floor layers:
 
-Management floor:
+
+Our developing department:  
 - Sentient-OS
 
 On premises data center: 
 - Sapient-KB
 - Powerframe-DMI
 
+Main director:
+- WOMMedia
+
+Industry 3D enginering floor:
+- Mucho3D
+- Flink3D
+
 SaaS Production:
 - TRT-web
 - TRT-App
 - TRT-UNITY
 
-User Production department:
+SaaS - TRT Production department:
 - PowerStarter-Web
 - PowerStarter-Hub
 - PowerStarter-Feed
 - PowerStarter-UP
 
-Full Production department:
+SaaS - Full Production department:
 - Powerframe-Web
 - Powerframe-GMS
 - Powerframe-TPR
 - Powerframe-CRM
 - Powerframe-WMS
 
-Of premises:
+Of site premises:
 - Powerframe-BIS
 - Powerframe-WAI
 
-E-Com:
+TRT E-Commerce Portfolio:
 - Concept-Shop
+
+Catalogus web Shops:
 - DealInstinct
 - BikerInstinct
 
-Industry:
-- WOMMedia
-- Mucho3D
-- Flink3D
-
 Agents:
-🎰4:
 - Remote Agents > Business Communication
 - Trade Agent V1 > Web Sales regisry
 - Lead Agent V1 > Retailer registry
