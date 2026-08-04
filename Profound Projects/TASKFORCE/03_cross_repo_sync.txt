@@ -1,0 +1,7 @@
+Role: Devops & Platform Engineer
+Context: Cross-repo contract orchestration under Sentient-OS governance.
+Task: Generate a markdown execution plan detailing how breaking contract changes in foundational layers (like Powerframe-DMI or Sapient-KB) propagate down to edge layers (like Catalogus web Shops or Agents).
+Requirements:
+1. Map a strict multi-step synchronization pipeline.
+2. Define how Contract Versioning (SemVer) maps to independent repository releases.
+3. Write out a markdown sequence diagram template showing a contract change event triggering downstream sub-repo linters.
