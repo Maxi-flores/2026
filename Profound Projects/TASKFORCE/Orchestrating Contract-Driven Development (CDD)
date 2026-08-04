@@ -1,0 +1,21 @@
+Role: Principal Enterprise Architect
+Context: We use Contract-Driven Development (CDD) across separate repositories managed via Sentient-OS.
+Input: The umbrella floor layer elevation scheme:
+- Developing: Sentient-OS
+- On-Premises Data Center: Sapient-KB, Powerframe-DMI
+- Main Director: WOMMedia
+- Industry 3D Engineering: Mucho3D, Flink3D
+- SaaS Production: TRT-web, TRT-App, TRT-UNITY
+- SaaS - TRT Production: PowerStarter-Web, PowerStarter-Hub, PowerStarter-Feed, PowerStarter-UP
+- SaaS - Full Production: Powerframe-Web, Powerframe-GMS, Powerframe-TPR, Powerframe-CRM, Powerframe-WMS
+- Off-site Premises: Powerframe-BIS, Powerframe-WAI
+- TRT E-Commerce Portfolio: Concept-Shop
+- Catalogus Web Shops: DealInstinct, BikerInstinct
+- Agents: Remote Agents, Trade Agent V1, Lead Agent V1, Adds Agent V1
+
+Task: Generate the root-level /Architecture.md file. 
+Requirements:
+1. Define the Global Service & Interface Governance layer.
+2. Outline the global schema registries or API contract paths (e.g., OpenAPI/AsyncAPI paths).
+3. Map out a cross-repo contract orchestration topology showing data flow between layers (e.g., how Agents communicate with SaaS Full Production).
+4. Strictly use Markdown headers and bulleted lists. No filler text.
