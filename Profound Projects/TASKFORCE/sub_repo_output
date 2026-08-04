@@ -1,0 +1,140 @@
+# /Architecture.md
+
+# Project
+- Name: {{SUB_REPO_NAME}}
+- Elevation Floor Layer: {{ELEVATION_FLOOR_LAYER}}
+- Upstream Dependencies: {{UPSTREAM_DEPENDENCIES}}
+- Downstream Consumers: {{DOWNSTREAM_CONSUMERS}}
+- Last Reviewed: {{REVIEW_DATE}}
+
+# 1. Local Component Mapping
+- Source root: ./ (replace with actual path if nested)
+- Entry points:
+  - API server: {{PATH_TO_API_ENTRY}} (e.g., src/main.py, cmd/server)
+  - CLI/worker: {{PATH_TO_CLI_OR_WORKER}} (e.g., bin/worker)
+  - Background jobs: {{PATH_TO_JOBS}}
+- Public modules / packages:
+  - {{MODULE_A}} — responsibility: {{SHORT_DESC}}
+  - {{MODULE_B}} — responsibility: {{SHORT_DESC}}
+- Internal services:
+  - Auth adapter: {{PATH_OR_MODULE}}
+  - Data access layer: {{PATH_OR_MODULE}}
+  - Cache layer: {{PATH_OR_MODULE}}
+- Static/config:
+  - Config files: {{config/*.yaml|json|env}}
+  - Schema files: {{schemas/*.json|yaml}}
+
+# 2. Ingress & Egress Interface Compliance
+
+Notes:
+- Use semantic versioning for each contract: vMAJOR.MINOR.PATCH
+- All egress must include global telemetry headers: X-SENTIENT-REQ-ID, X-SENTIENT-SERVICE, X-SENTIENT-ENV, X-SENTIENT-TIME
+
+## 2.1 REST / HTTP Endpoints (Ingress)
+| Path | Method | Contract ID | Version | Auth | Request Schema | Response Schema | Notes |
+|---|---:|---|---:|---:|---|---|---|
+| {{INGRESS_PATH_1}} | GET | {{CONTRACT_ID_HTTP_1}} | v{{X.Y.Z}} | {{OAuth2/APIKey/None}} | {{schemas/request_http_1.json}} | {{schemas/response_http_1.json}} | Public entry |
+| {{INGRESS_PATH_2}} | POST | {{CONTRACT_ID_HTTP_2}} | v{{X.Y.Z}} | {{OAuth2/APIKey}} | {{schemas/request_http_2.json}} | {{schemas/response_http_2.json}} | Creates resource |
+
+## 2.2 gRPC Services (Ingress/Egress)
+| Service | Method | Contract ID | Version | Proto File | Notes |
+|---|---|---|---:|---|---|
+| {{GrpcService.Name}} | {{MethodName}} | {{CONTRACT_ID_GRPC_1}} | v{{X.Y.Z}} | {{protos/service.proto}} | bi-directional stream / unary |
+
+## 2.3 Messaging / Event Schemas (Ingress/Egress)
+| Topic / Queue | Direction | Contract ID | Version | Schema File | Broker |
+|---|---|---|---:|---|---|
+| {{topic.orders}} | egress | {{CONTRACT_ID_EVENT_1}} | v{{X.Y.Z}} | {{schemas/order_event.json}} | Kafka |
+| {{queue.payment}} | ingress | {{CONTRACT_ID_EVENT_2}} | v{{X.Y.Z}} | {{schemas/payment_event.json}} | RabbitMQ |
+
+## 2.4 Data Models & Persistence Contracts
+| Model | Storage | Contract ID | Version | Schema |
+|---|---|---|---:|---|
+| {{Customer}} | Postgres (table: customers) | {{CONTRACT_ID_MODEL_CUSTOMER}} | v{{X.Y.Z}} | {{schemas/customer.json}} |
+| {{Inventory}} | Redis / Cache | {{CONTRACT_ID_MODEL_INVENTORY}} | v{{X.Y.Z}} | {{schemas/inventory.json}} |
+
+# 3. Elevation Layer Alignment & Guardrails
+- Layer rule: {{SUB_REPO_NAME}} MUST not call on-prem data center endpoints directly.
+- Allowed upstream access: only via declared gateways: {{UPSTREAM_DEPENDENCIES}} or Sentient-OS global API gateway at {{GLOBAL_API_GATEWAY_URL}}.
+- Egress enforcement:
+  - All outgoing HTTP/gRPC calls must pass through service discovery / API gateway.
+  - All events published must use the central topic prefix: sentient.<layer>.<service>.
+- Required headers for telemetry and governance:
+  - X-SENTIENT-REQ-ID: UUID v4
+  - X-SENTIENT-SERVICE: {{SUB_REPO_NAME}}
+  - X-SENTIENT-ENV: {{ENV}}
+  - X-SENTIENT-TIME: ISO8601 UTC
+- Secrets & auth:
+  - Secrets must use central secret manager (vault path: {{VAULT_PATH}}).
+  - No hard-coded credentials in repo.
+
+# 4. Contract Versioning & Compatibility Rules
+- Versioning: SemVer enforced for all contract IDs.
+- Breaking change = MAJOR version bump.
+- Minor/patch allowed for additive or non-breaking fixes.
+- Consumer must support at least two previous minor versions where possible.
+
+# 5. Contract Breaking-Change Checklist
+- For each downstream consumer in {{DOWNSTREAM_CONSUMERS}}:
+  - [ ] Notify consumer owners 30 days prior for MAJOR changes.
+  - [ ] Create migration guide with sample requests/responses.
+  - [ ] Provide feature flag or dual-write support for 90-day overlap.
+  - [ ] Add automated compatibility tests in CI that run against downstream mock harnesses.
+  - [ ] Publish updated OpenAPI/AsyncAPI and schema to registry.
+- Local checklist to run before pushing MAJOR:
+  - [ ] Bump contract version in schema files.
+  - [ ] Run schema compliance tests (see Section 6).
+  - [ ] Run cross-repo contract linter.
+  - [ ] Open PR with clear Contract-Change label and link to consumers affected.
+  - [ ] Schedule contract verification run with Platform team.
+
+# 6. CI/CD: Schema Verification & Gates
+- Pre-merge checks:
+  - Step 1: Validate local schema files against Sentient-OS schema lint rules (tool: spectral/jsonschema) — command: {{CMD_SCHEMA_LINT}}
+  - Step 2: Run contract verifier that queries central registry for current contract versions — command: {{CMD_VERIFY_REGISTRY}}
+  - Step 3: Run consumer compatibility tests (mocks) — command: {{CMD_RUN_COMPAT_TESTS}}
+  - Step 4: Run unit and integration tests.
+- Merge gate:
+  - Fail merge if schema lint or registry validation fails.
+  - Require "contract-review" approval from Platform or owning team for MAJOR bumps.
+- Release:
+  - On publish, push schemas to central registry at {{REGISTRY_URL}} with metadata: service, commit, version, checksum.
+
+# 7. Observability & SLAs
+- Expose metrics:
+  - endpoint: /metrics (Prometheus)
+  - traces: OTLP to {{OTLP_ENDPOINT}}
+  - logs: structured JSON to central log ingest at {{LOG_INGEST_URL}}
+- SLA commitments:
+  - Latency P99: {{LATENCY_P99}} ms
+  - Uptime: {{UPTIME_SLA}}%
+- Alerting:
+  - Error rate > {{ERR_RATE_THRESHOLD}}% over 5m.
+  - Missing telemetry headers -> alert.
+
+# 8. Runbook (short)
+- Start service: {{CMD_START}}
+- Stop service: {{CMD_STOP}}
+- Health check: GET {{HEALTH_CHECK_PATH}}
+- Emergency rollback: revert to tag {{LAST_GOOD_TAG}} and redeploy.
+
+# 9. Folder Mappings (local)
+| Purpose | Path |
+|---|---|
+| API implementation | {{api/}} |
+| Schemas (contract definitions) | ./schemas/ |
+| Protos | ./protos/ |
+| CI scripts | ./.github/workflows/ |
+| Tests (contract & integration) | ./tests/contract/ |
+
+# 10. Open Questions / Action Items
+- [ ] Confirm actual API entry paths and replace placeholders.
+- [ ] Register all contract IDs with central registry: {{REGISTRY_URL}}.
+- [ ] Add automated consumer mock harnesses for listed downstream consumers.
+- [ ] Schedule contract alignment review with owners of {{UPSTREAM_DEPENDENCIES}} and {{DOWNSTREAM_CONSUMERS}}.
+
+# Appendix: Quick Commands
+- Schema lint: {{CMD_SCHEMA_LINT}}
+- Publish schema: {{CMD_PUBLISH_SCHEMA}}
+- Verify registry: {{CMD_VERIFY_REGISTRY}}
+- Run contract tests: {{CMD_RUN_CONTRACT_TESTS}}
