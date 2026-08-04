@@ -1,0 +1,59 @@
+Sounds good — here’s a concise, practical plan to integrate an SQL-backed user account system into your existing Powerframe apps while using Firebase for user connections (auth, realtime features, push, etc.).
+
+Recommended architecture (high level)
+- Primary user store: SQL database (Postgres / MySQL) — authoritative source for user profiles, roles, billing, business logic.
+- Authentication: Firebase Authentication (email/password, OAuth providers, phone) — quick, secure auth and identity lifecycle.
+- Sync layer: Backend service (Powerframe app server / microservice) that links Firebase UID ↔ SQL user_id and synchronizes relevant fields.
+- Real-time features / presence / messaging: Firebase Realtime Database or Firestore used for ephemeral realtime data; canonical data stays in SQL.
+- Push notifications: Firebase Cloud Messaging (FCM).
+- API layer: Your existing Powerframe backend exposes REST/GraphQL that reads/writes SQL, uses Firebase Admin SDK to validate tokens and perform realtime actions.
+
+Core components & responsibilities
+1. SQL user table (example fields)
+   - id (primary key)
+   - firebase_uid (unique, nullable until linked)
+   - email, normalized_email
+   - name, display_name
+   - password_hash (optional if you keep SQL auth; recommended to use Firebase so not needed)
+   - roles/permissions (JSON or separate roles table)
+   - created_at, updated_at
+   - last_login_at, picture_url, metadata (JSON)
+2. Firebase Authentication
+   - Sign-up / sign-in handled client-side with Firebase SDKs.
+   - On first sign-in, client sends Firebase ID token to your backend.
+   - Backend verifies ID token (Firebase Admin SDK) and creates or links SQL user row using firebase_uid.
+3. Sync patterns
+   - On create: create SQL user with firebase_uid and copy profile fields from Firebase (email, name, photo).
+   - On update: use webhook (Firebase Cloud Functions or Auth triggers) or periodic sync to update SQL profile fields if you want Firebase as source-of-truth for those fields.
+   - On delete: listen to Firebase Auth delete events to soft-delete SQL user or mark disabled.
+4. Token validation / session flow
+   - Client presents Firebase ID token to your backend on each request.
+   - Backend validates token via Firebase Admin SDK, finds SQL user by firebase_uid, enforces roles/permissions from SQL.
+5. Realtime & presence
+   - Use Firestore/Realtime DB for presence, live connections, and ephemeral messages. Store canonical messages or long-lived data in SQL (or mirror to SQL if needed).
+6. Security & rules
+   - Enforce Firebase Security Rules for realtime data.
+   - Use server-side role checks based on SQL roles — do not rely solely on client-provided claims.
+   - Consider custom Firebase claims (set by backend) to surface roles in ID token for client-side rule use.
+7. Offline / conflict handling
+   - Keep user profile edits centralized (backend writes SQL, then update Firebase profile via Admin SDK) or accept Firebase-first with sync to SQL and clearly define conflict resolution.
+
+Implementation steps (short)
+1. Add firebase_uid column to your SQL users table.
+2. Integrate Firebase Auth in clients for sign-up/sign-in.
+3. On client sign-in, send ID token to your backend; backend verifies token, upserts SQL user with firebase_uid.
+4. Use Firebase Admin SDK to set custom claims when required (roles).
+5. For realtime features, implement Firestore/Realtime DB and apply Security Rules.
+6. Add webhook/triggers (Cloud Functions or backend subscription) to sync deletes/updates from Firebase to SQL as needed.
+7. Audit and test flows: sign-up, sign-in, profile update, role change, delete, offline sync.
+
+Trade-offs / considerations
+- Let Firebase manage credentials to reduce security burden; keep SQL for business data and authorization.
+- If you need complex queries/joins across user data, keep canonical profile fields in SQL and replicate lightweight profile fields to Firebase for quick reads.
+- Custom claims are limited in size; don’t store large role payloads there — use them for simple role flags.
+
+Next steps I can help with
+- Provide SQL schema migration SQL and example APIs (Node/Express, Python, or your stack).
+- Example backend code to verify ID tokens and upsert users.
+- Firebase Security Rules and Cloud Function templates for sync.
+Which would you like first, and what stack does your Powerframe system use (language/framework, DB type)?
