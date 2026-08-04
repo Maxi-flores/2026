@@ -1,0 +1,6 @@
+Role: AI & Automation System Architect
+Context: Focus specifically on the "Agents" layer: Remote Agents, Trade Agent V1, Lead Agent V1, Adds Agent V1.
+Task: Generate the specific contract and interface design documentation for the Agent layer's interactions with SaaS & E-commerce backends.
+Requirements:
+1. Define precise messaging interface guidelines (JSON-Schema / gRPC stubs) for Retailer Registry (Lead Agent), Web Sales Registry (Trade Agent), and Marketing Registry (Adds Agent).
+2. Document state management and communication contracts back to the Main Director (WOMMedia).
