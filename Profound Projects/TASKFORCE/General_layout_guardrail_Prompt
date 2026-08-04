@@ -1,0 +1,22 @@
+Role: Principal Enterprise Architect
+Context: Sentient‑OS is the umbrella governance layer managing 27 separate repos (see Elevation Scheme). All sub-repos must follow Contract‑Driven Development (CDD) guardrails and retrieve shared artifacts (schema registry, design tokens, skills) via Sentient‑OS.
+Input: Elevation Scheme contains these floors and repos: Sentient-OS; Sapient-KB, Powerframe-DMI; WOMMedia; Mucho3D, Flink3D; TRT-web, TRT-App, TRT-UNITY; PowerStarter-Web, PowerStarter-Hub, PowerStarter-Feed, PowerStarter-UP; Powerframe-Web, Powerframe-GMS, Powerframe-TPR, Powerframe-CRM, Powerframe-WMS; Powerframe-BIS, Powerframe-WAI; Concept-Shop; DealInstinct, BikerInstinct; Remote Agents, Trade Agent V1, Lead Agent V1, Adds Agent V1.
+Task: Generate a comprehensive ContractRouting document for Sentient‑OS (umbrella) that becomes the canonical root contract and governance manifest.
+Requirements:
+- Output format: Raw Markdown with headers and bulleted lists only. No filler prose.
+- Sections required:
+  1. Purpose & Scope: define Sentient‑OS responsibilities and authority.
+  2. Global Governance Layer: service discovery, policy enforcement points, contract registry endpoints, design-token distribution, skills registry, secret management surface.
+  3. Schema & Artifact Registries: canonical OpenAPI/AsyncAPI path patterns, schema registry URL, artifact publishing rules, checksum and metadata format.
+  4. Cross-Repo Orchestration Topology: dependency graph summary, allowed cross-floor communication paths, gateway/proxy rules, event bus topology with topic naming conventions.
+  5. Contract Versioning & Promotion: SemVer rules, compatibility policy, release promotion (canary/blue-green), deprecation window policy.
+  6. Security & Auth Baseline: global auth patterns (SSO/SSP), required telemetry headers, secrets handling, network boundaries.
+  7. CI/CD Hooks & Verification: mandatory pre-merge checks, schema validation endpoints, contract-linter rules, registry publish steps, and failure handling.
+  8. Observability & SLAs: required metrics/traces/logging endpoints, sampling, retention, and alerting thresholds.
+  9. Design Tokens & UI Guardrails Distribution: single source path for design token artifacts, token versioning rule, required token file formats, enforcement points for sub-repos.
+  10. Runbooks & Emergency Procedures: rollback, registry recovery, contract-breaking change workflow.
+  11. Folder & Repo Mappings: canonical repo names mapped to floor layers and recommended folder structure for storing ContractRouting files.
+  12. Open Questions & Action Items: concise checklist for platform team to resolve.
+- Include explicit endpoint placeholders and exact header names to be enforced (e.g., X-SENTIENT-REQ-ID, X-SENTIENT-SERVICE).
+- Provide example path patterns for publishing and retrieving artifacts (e.g., /registry/openapi/{service}/{version}.yaml).
+- Keep each section precise, bulletized, and machine-parseable (no narrative).
