@@ -1,0 +1,9 @@
+Role: Senior Interface Engineer
+Context: Contract-first design pattern.
+Input Variable: {{PROJECT_NAME}} from the Elevation Scheme list.
+Task: Create a reusable template for a sub-repository /Architecture.md.
+Requirements:
+1. Section [API & Event Contracts]: List the strict ingress/egress interface contracts this specific project must implement.
+2. Section [Schema Verification]: Detail the automated CI/CD gating steps to validate code changes against the central contract registry before merge.
+3. Section [Dependencies]: Explicitly list upstream provider contracts and downstream consumer contracts for this project layer.
+Output format: Raw Markdown document. Include placeholder tokens like {{UPSTREAM_CONTRACTS}} for easy interpolation.
