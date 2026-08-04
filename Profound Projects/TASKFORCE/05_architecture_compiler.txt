@@ -1,0 +1,6 @@
+Role: Documentation Release Engineer
+Context: Compiling the final ecosystem map.
+Task: Take the output of prompt 01 (Root Governance) and a folder containing the generated 27 sub-repo Architecture markdown files. 
+Requirements:
+1. Analyze all documents for breaking contract alignment or missing interface references.
+2. Generate a cohesive index file (`/Architecture_Index.md`) that links all sub-repos to their respective floor layers with structural status trackers (e.g., Contract Status: Validated/Draft/Stale).
