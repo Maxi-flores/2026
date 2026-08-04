@@ -1,0 +1,60 @@
+# Study Agent V1 — Integration Doc
+
+**Location in taxonomy:**
+`Study Agent V1 (repo)` → `Sentient OS - Agents World` → `Powerframe-TPR` → `Study path` → `Sapient KB`
+
+**Status:** Draft — placeholders marked `[TBD]` need to be filled in with actual system details.
+
+---
+
+## 1. Purpose
+
+This doc defines how Study Agent V1 connects to Powerframe user apps and cloud account data, so it can be indexed correctly under Sapient KB and referenced by other agents in the Sentient OS - Agents World.
+
+## 2. Scope
+
+- Which Powerframe user apps Study Agent reads from / writes to
+- What cloud account data it needs access to
+- Where its outputs live within the Study path
+
+## 3. Connected Powerframe User Apps
+
+| App | Access type (read/write) | Data used | Notes |
+|---|---|---|---|
+| [TBD — e.g. Notes app] | | | |
+| [TBD — e.g. Flashcards app] | | | |
+| [TBD — e.g. Calendar/Scheduler] | | | |
+
+## 4. Cloud Account Data
+
+| Data source | Purpose | Auth method | Notes |
+|---|---|---|---|
+| [TBD — e.g. user profile/account service] | | | |
+| [TBD — e.g. cloud storage/documents] | | | |
+
+## 5. Position in Sentient OS - Agents World
+
+- **Parent world:** Sentient OS - Agents World
+- **Sub-domain:** Powerframe-TPR
+- **Path:** Study path
+- **KB destination:** Sapient KB
+
+Study Agent V1 registers itself under this path so other agents in Agents World can discover its capabilities and query its outputs via Sapient KB.
+
+## 6. Data Flow (high level)
+
+```
+Powerframe user apps  ─┐
+                        ├─→ Study Agent V1 ─→ Sapient KB (Study path)
+Cloud account data     ─┘
+```
+
+## 7. Open Questions
+
+- [ ] Confirm exact list of user apps Study Agent needs access to
+- [ ] Confirm auth/permissions model for cloud account data
+- [ ] Confirm KB schema/format expected by Sapient KB
+- [ ] Confirm how this section should be surfaced on tpr.powerframe.online
+
+---
+*Drafted as a starting template — fill in TBDs with your actual system specifics before publishing to tpr.powerframe.online.*
