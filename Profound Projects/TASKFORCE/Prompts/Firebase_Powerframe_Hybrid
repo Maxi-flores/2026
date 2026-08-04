@@ -1,0 +1,31 @@
+Short answer: No — you don't have to make a dedicated SQL "accounts page." Firebase Authentication can fully handle accounts (Google, Facebook, other OAuth providers, and email/password) without using SQL. Whether you should depends on your requirements.
+
+Options & when to choose each
+1. Firebase-only (no SQL user table)
+- What it gives: authentication, provider sign-in (Google/Facebook/etc.), email/password, account lifecycle, token issuance, basic profile (email, name, photo), built-in password reset, phone auth, and easy client SDKs.
+- Good when: your app needs simple auth, minimal server-side user data, realtime features handled in Firestore/Realtime DB, and you accept Firebase as primary user store.
+- Pros: faster to implement, less backend code, secure managed auth.
+- Cons: limited complex querying, harder to store relational business data or complex roles/permissions, limited server-side transactional joins, backup/export complexity.
+
+2. Hybrid: Firebase Auth + SQL user table (recommended for many production apps)
+- What it gives: Firebase handles credentials; SQL holds canonical profiles, roles, billing, business relations, complex queries, analytics, and audits. Backend maps firebase_uid ↔ user_id.
+- Good when: you need role-based access beyond small claims, relational data, billing, enterprise integrations, advanced querying/reporting, or regulatory requirements.
+- Pros: best of both worlds — secure auth plus flexible server-side data model and tooling.
+- Cons: extra sync code and schema, slightly more maintenance.
+
+3. SQL-only auth (not using Firebase)
+- Rare for you if you like Firebase features. Choose if you need full control over auth flows, or avoid third-party auth providers entirely.
+
+Key decision checklist
+- Do you need relational/user-linked business data, billing, or complex queries? → Use SQL or Hybrid.
+- Do you want minimal backend and fast launch with managed auth? → Firebase-only is fine.
+- Do you need centralized roles/authorization enforced server-side? → Hybrid is safer (SQL for roles; custom claims optional).
+- Do you require GDPR/enterprise data export/backups in standard SQL? → Hybrid/SQL preferred.
+
+Recommendation
+- For most Powerframe system apps: use Firebase Auth for sign-in (Google/Facebook/email) and implement a lightweight SQL user table that stores firebase_uid plus business fields. This gives fast auth and the flexibility to scale your server-side logic later.
+
+If you want, I can:
+- Provide a minimal SQL user table schema and upsert flow that maps firebase_uid.
+- Or provide a Firebase-only design and security rules for profiles if you prefer no SQL.
+Which would you like?
