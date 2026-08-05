@@ -8,22 +8,22 @@ ____________________
 Plain text (year blocks)
 [2027]
 
-jan -
-feb -
-mar -
-apr -
-mei -
-jun -
-jul -
-aug -
-sep -
-okt -
-nov -
-dec -
+jan - 0
+feb - 0
+mar - 0
+apr - 0
+mei - 0
+jun - 0
+jul - 100
+aug - 
+sep - 
+okt - [300]
+nov - [600]
+dec - [1200]
 
 [2028]
 
-jan -
+jan - 
 feb -
 mar -
 apr -
@@ -35,3 +35,21 @@ sep -
 okt -
 nov -
 dec -
+
+____________________
+Payment (year blocks)
+[2027]
+
+jan - -3000
+feb - -10000 / 13500
+mar - -9800 / 13300
+apr - -9600 / 13100
+mei - -9400 / 12900
+jun - -9200 / 12700
+jul - -9000 / 12500
+aug - -8800 / 12300
+sep - -8600 / 12100
+okt -
+nov -
+dec -
+
