@@ -1,0 +1,48 @@
+Ontwerpen (Architect), Automatiseren/Coderen (DevOps), of Beveiligen (Security)
+
+Nee, deze functies gaan juist een stap verder dan puur cloudbeheer. Hoewel ze allemaal op Azure draaien, verschuift de focus van beheren en onderhouden naar ontwerpen, automatiseren of beveiligen.
+Hier is het exacte verschil tussen traditioneel cloudbeheer en deze hoogbetaalde functies:
+------------------------------
+## 🛠️ Wat is puur Cloud Beheer (Cloud Administration)?
+Dit is wat je doet met de AZ-104. Je bent de "systeembeheerder van de cloud". Je taken zijn voornamelijk uitvoerend:
+
+* Gebruikers toegang geven (Identity Management).
+* Virtuele machines groter of kleiner maken.
+* Back-ups controleren en storingen oplossen.
+* Dit werk gebeurt vaak handmatig in de Azure Portal.
+
+------------------------------
+## 🏎️ Waarom de andere functies méér zijn dan beheer:## 1. Azure Cloud Architect ➔ Focus: Strategie & Ontwerp
+
+* Geen beheer: Je beheert geen servers en lost geen dagelijkse storingen op.
+* Wat doe je wel? Je zit aan tafel met de directie en het development-team. Je tekent de blauwdruk (de architectuur) van een compleet nieuwe cloud-omgeving. Je bepaalt hoe systemen veilig, snel en schaalbaar met elkaar communiceren.
+
+## 2. Azure DevOps / Platform Engineer ➔ Focus: Software & Automatisering
+
+* Geen beheer: Je klikt niet handmatig in Azure om een server aan te maken.
+* Wat doe je wel? Je bent eigenlijk een software engineer, maar dan voor infrastructuur (Infrastructure as Code). Je schrijft code (bijvoorbeeld in Terraform) die automatisch honderden servers tegelijk kan uitrollen, updaten of vernietigen. Je bouwt de "lopende band" (CI/CD pipelines) voor de software-ontwikkelaars.
+
+## 3. Azure Security Engineer ➔ Focus: Hackers buitenhouden & Compliance
+
+* Geen beheer: Je houdt je niet bezig met de prestaties van de cloud of het aanmaken van accounts.
+* What doe je wel? Je test de cloud-omgeving op kwetsbaarheden. Je richt firewalls in, configureert geavanceerde encryptie (versleuteling) en reageert direct als er een cyberaanval of datalek plaatsvindt.
+
+## 4. Azure FinOps Specialist ➔ Focus: Financiën & Data-analyse
+
+* Geen beheer: Dit is een mix tussen IT en Finance.
+* Wat doe je wel? Je analyseert de Azure-rekening van een bedrijf (die miljoenen kan bedragen). Je zoekt naar patronen van verspilling. Je adviseert het management over hoe ze met slimme cloud-inkoop (zoals Reserved Instances) direct geld kunnen besparen.
+
+------------------------------
+## 🎯 Wat betekent dit voor jou?
+Als "self-learned" engineer start je bijna altijd in Cloud Beheer / Cloud Support. Dat is de perfecte fundering. Terwijl je dat werk doet, merk je vanzelf wat je leuk vindt:
+
+* Vind je programmeren en automatiseren vet? Dan groei je door naar DevOps.
+* Vind je het leuk om puzzels op te lossen en systemen te beveiligen? Dan kies je Security.
+* Praat je graag met klanten en bedenk je graag oplossingen? Dan word je Architect of Consultant.
+
+Als je wilt, geef me een seintje:
+
+* Welke van deze vier rollen klinkt voor jou als de meest logische of leukste uitdaging?
+* Wil je weten hoe je je portfolio nu al kunt aanpassen om te laten zien dat je méér kunt dan alleen basisbeheer?
+
+
